@@ -1,4 +1,5 @@
 const userRagistrationModel = require('../models/user.js');
+const loginModel = require('../models/user.js');
 
 class userData{
 
@@ -6,5 +7,12 @@ class userData{
         userRagistrationModel.createUser(userData,callback);
     };
 }
+class loginData{
 
-module.exports = new userData();``
+    createLogin = (loginData, callback) =>{
+        loginModel.createLogin(loginData,callback);
+    };
+}
+
+module.exports = new userData();
+module.exports = new loginData();
