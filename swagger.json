@@ -1,0 +1,15 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is User Ragistration Api",
+        "version": "1.0.0",
+        "title": "User Ragistration Api"
+    },
+    "host": "localhost3000",
+    "tags" : [
+        {
+            "name" : "FunDooNotesApi",
+            "descrittion" : "Creating User Ragistration and Login Api."
+        }
+    ]
+}
