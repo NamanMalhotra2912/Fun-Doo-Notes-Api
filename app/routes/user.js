@@ -3,13 +3,11 @@
  * 
  * Purpose          : to hit the perticular API
  *                    
- *                     
- *                    
  * 
  * @file            : routes.js
- * @author          : Sapna Patil
+ * @author          : Neeraj Malhotra
  * @version         : 1.0
- * @since           : 01-10-2018
+ * @since           : 07-05-2020
  * 
  **************************************************************************/
 const user = require('../controllers/user.js');     

@@ -1,32 +1,34 @@
 const joi = require('@hapi/joi');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const nodemailer = require('nodemailer');
 
-const authSchema = joi.object({
+
+const ragistationSchema = joi.object({
     firstName : joi.string().min(3).pattern(/^[A-Z][a-zA-Z]{2}/) .required(),
     lastName : joi.string().pattern(/^[A-Z][a-zA-Z]{2}/) .required(),
     email : joi.string().email().required(),
     password : joi.string().pattern(/^[A-Z][a-zA-Z0-9]{5,}[$&^!@#()|,;:<>?/%-+][0-9]{3,}/).required()
 });
 
-const createToken = (data) => {
-    const token = jwt.sign({ email: data.email }, process.env.JWT, { expiresIn: '1h' });
+const createToken = (result) => {
+    const token = jwt.sign({ name: result.email }, process.env.JWT, { expiresIn: '1 hour' });
     console.log(token);
     return token;
 }
 
-const mail = () => {
+const mail = (data) => {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'neerajmalhotra0001@gmail.com',
-      pass: 'Naman@291218'
-    }
+      user: process.env.USER,
+      pass: process.env.PASS,
+    },
   });
   
   var mailOptions = {
-    from: 'neerajmalhotra0001@gmail.com',
-    to: 'neerajmalhotra0001@gmail.com',
+    from: 'nmalhotra1289@gmail.com',
+    to: 'nmalhotra1289@gmail.com',
     subject: 'Sending Email using Node.js for reset password',
     text: `Hi Raj, You can follow below shared link to reset your password.`,
     html: '<h1>Hi Raj</h1> <p>Please follow the link shared below.</p>' 
@@ -34,11 +36,11 @@ const transporter = nodemailer.createTransport({
   
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
-      console.log(error);
+      console.log("this is the error from mailer "+ error);
     } else {
-      console.log('Email sent: ' + info.response);
+      console.log('Password Reset mail sent successfully, please check your mail.' + info.response);
     }
   });
 }
 
-module.exports = { authSchema, createToken, mail };
+module.exports = { ragistationSchema, createToken, mail };

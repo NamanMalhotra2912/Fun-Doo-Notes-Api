@@ -1,8 +1,8 @@
-const { authSchema, createToken } = require('../../helper/validationSchema.js');
+const { ragistationSchema, createToken } = require('../../helper/validationSchema.js');
 const user = require('../services/user.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const 
+// const 
 
 class UserRagistration{
 
@@ -14,7 +14,7 @@ class UserRagistration{
         })
     }
 
-    const checkValidation = authSchema.validate(req.body);
+    const checkValidation = ragistationSchema.validate(req.body);
         if (checkValidation.error){
             return res.send("Please enter correct details for ragistration.");
         }        
@@ -48,16 +48,20 @@ class UserRagistration{
         email: req.body.email,
         password: req.body.password
     };
+    // console.log(loginData);
     user.createLogin(loginData, (error, result) =>{
         if(error){
             res.status(400).send({
-                message: "Already Login ",
+                success : false,
+                message: "User is not ragistered",
+                error
             });
         }
         else{
             res.status(200).send({
+                success : true,
                 message: "You are Logged in Successfully.",
-                Token : createToken(data),
+                Token : createToken(result),
                 // data : result
             });
         }
@@ -68,6 +72,7 @@ class UserRagistration{
         const forgetData = {
             email: req.body.email,
         };
+        console.log(forgetData);
         user.forgetPassword(forgetData, (error, result) =>{
             if(error){
                 res.status(500).send({
