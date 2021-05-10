@@ -2,7 +2,6 @@ const { ragistationSchema, createToken } = require('../../helper/validationSchem
 const user = require('../services/user.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-// const 
 
 class UserRagistration{
 

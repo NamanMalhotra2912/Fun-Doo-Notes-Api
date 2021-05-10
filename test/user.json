@@ -1,0 +1,42 @@
+{
+    "user":
+    {
+        "correct_Data_For_Ragistration":
+        {
+            "firstName" : "Neeraj",
+            "lastName"  : "Malhotra",
+            "email"     : "neeraj@gmail.com",
+            "password"  : "Naman@12345"
+        },
+
+        "in_correct_Data_For_Ragistration":
+        {
+            "firstName": "neeraj",
+            "lastName": "malhotra",
+            "email": "Neeraj@gmail.com",
+            "password": "neeraj"
+        },
+
+        "check_UserLogin":
+        {
+            "email": "neeraj@gmail.com",
+            "password": "Naman@12345"
+        },
+
+        "check_Incorrect_UserLogin":
+        {
+            "email": "Neeraj@gmail.com",
+            "password": "neeraj@1245"
+        },
+
+        "check_Forget_Password":
+        {
+            "email": "neeraj@gmail.com"
+        },
+
+        "check_InCorrect_Forget_Password":
+        {
+            "email": "Neeraj@gmail.com"
+        }
+    }
+}

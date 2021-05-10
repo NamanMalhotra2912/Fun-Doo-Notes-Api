@@ -1,24 +1,27 @@
 {
   "name": "fundoonotes",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "User Ragistartion Api",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test" : "mocha",
     "start": "nodemon server.js",
     "lint": "eslint ./",
     "debug": "nodemon --inspect server.js"
   },
-  "author": "",
+  "author": "Neeraj_Malhotra",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "bcrypt": "^5.0.1",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "dotenv": "^9.0.0",
     "eslint-config-standard": "^16.0.2",
     "express": "^4.17.1",
     "express-joi-validation": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
+    "mocha": "^8.4.0",
     "mongoose": "^5.12.7",
     "nodemailer": "^6.6.0",
     "swagger-ui-express": "^4.1.6"

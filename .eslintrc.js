@@ -18,5 +18,6 @@ module.exports = {
         "node"
     ],
     "rules": {
+        "no-unused-var" : 0
     }
 };
