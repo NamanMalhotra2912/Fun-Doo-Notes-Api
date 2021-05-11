@@ -13,8 +13,8 @@
         {
             "firstName": "neeraj",
             "lastName": "malhotra",
-            "email": "Neeraj@gmail.com",
-            "password": "neeraj"
+            "email": "neeraj@gmail.com",
+            "password": "Neeraj@1234"
         },
 
         "check_UserLogin":
@@ -31,12 +31,25 @@
 
         "check_Forget_Password":
         {
-            "email": "neeraj@gmail.com"
+            "email": "Naman@12345"
         },
 
         "check_InCorrect_Forget_Password":
         {
-            "email": "Neeraj@gmail.com"
+            "email": "Naman@145"
+        },
+
+        "resetPassword":
+        {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MjA3MDY3ODcsImV4cCI6MTYyMDcxMDM4N30.hveHIFiJHwqOrecDETC2sN6eprAARvVWDcC8Y7QlhTo",
+            "password" : "Neeraj@12345"
+        },
+
+        "incorrect_resetPassword":
+        {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MjA3MDY3ODcsImV4cCI6MTYyMDcxMDM4N30.hveHIFiJHwqOrecC2sN6eprAARvVWDcC8Y7QlhTo",
+            "password" : "Nera@12345"
         }
+
     }
 }

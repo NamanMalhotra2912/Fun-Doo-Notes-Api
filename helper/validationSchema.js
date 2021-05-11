@@ -1,8 +1,22 @@
+/*************************************************************************
+ * Execution        : 1. default node       cmd> npm start
+ * 
+ * Purpose          : to create the validation schema for user Api using hapi-joi.
+ *                    
+ * 
+ * @file            : validationSchema.js
+ * @author          : Neeraj Malhotra
+ * @version         : 1.0.0
+ * 
+ **************************************************************************/
 const joi = require('@hapi/joi');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 
+/*
+* user registration schema using hapi-joi validation.
+*/
 
 const ragistationSchema = joi.object({
     firstName : joi.string().min(3).pattern(/^[A-Z][a-zA-Z]{2}/) .required(),
@@ -11,11 +25,18 @@ const ragistationSchema = joi.object({
     password : joi.string().pattern(/^[A-Z][a-zA-Z0-9]{5,}[$&^!@#()|,;:<>?/%-+][0-9]{3,}/).required()
 });
 
+/*
+* genrating token using jwt (jsonwebtoken).
+*/
 const createToken = (result) => {
     const token = jwt.sign({ name: result.email }, process.env.JWT, { expiresIn: '1 hour' });
     console.log(token);
     return token;
 }
+
+/*
+* defining nodemailer to send the mail for forget password.
+*/
 
 const mail = (data) => {
 const transporter = nodemailer.createTransport({

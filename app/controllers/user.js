@@ -1,3 +1,15 @@
+/*************************************************************************
+ * Execution        : 1. default node       cmd> npm start
+ * 
+ * Purpose          : to create the schemas for user ragistration data.
+ *                    
+ * 
+ * @file            : user.js
+ * @author          : Neeraj Malhotra
+ * @version         : 1.0.0
+ * 
+ **************************************************************************/
+
 const { ragistationSchema, createToken } = require('../../helper/validationSchema.js');
 const user = require('../services/user.js');
 const jwt = require('jsonwebtoken');
@@ -5,6 +17,9 @@ const bcrypt = require('bcrypt');
 
 class UserRagistration{
 
+/*
+* Creating register api where user will enter his data.
+*/
     createUser = (req, res) => {        
         // console.log(req.body);
     if(!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password ) {
@@ -27,21 +42,25 @@ class UserRagistration{
         user.createUser(userDetails, (error, result) =>{
         if(error){
             res.status(400).send({
-                // message: error.message
-                message: "Please check it again.",
-                
+                success : false,
+                message: "Email already exist.",
+                error
             });
         }
         else{
             res.status(200).send({
-                
-                message: "Data has been added suceesfully.",
+                success : true,
+                message: "Congractulations",
                 data : result
             });
         }
     });
     }    
-    
+ 
+/*
+* Creating login api where user will enter his data for the login.
+*/
+
     createLogin = (req, res) => {
     const loginData = {
         email: req.body.email,
@@ -61,11 +80,15 @@ class UserRagistration{
                 success : true,
                 message: "You are Logged in Successfully.",
                 Token : createToken(result),
-                // data : result
+                data : result
             });
         }
     });
 };
+
+/*
+* Creating forget api where user will enter his data for forget email id and password
+*/
 
     forgetPassword = (req, res) => {
         const forgetData = {
@@ -88,6 +111,40 @@ class UserRagistration{
                 });
             }
         });
+    }
+/*
+* Creating reset Password api where user will enter his data for forget password
+*/
+    resetPassword = (req,res) => {
+        try {
+            const verifyPass = jwt.verify(req.headers.token ,process.env.JWT);
+            const resetPass = {
+                password: req.body.password, 
+                email: verifyPass.data.email,
+            }
+            user.resetPassword(resetPass ,(err,result) => {
+                if(err) {
+                  return res.status(401).send({
+                        success: false,
+                        message: 'Un-authorized access to reset your password',
+                        err,
+                    });
+                } else {
+                  return res.status(200).send({
+                        success: true,
+                        message: 'Password reset is Successful ',
+                        result,
+                    });
+                }
+            });
+        } catch (error) {
+            return res.status(400),send({
+                success: false,
+                message: 'Time-out, please try again to reset your password',
+                error
+            });
+        }
+       
     }
 };
 module.exports = new UserRagistration();
