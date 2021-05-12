@@ -13,13 +13,14 @@
 const { ragistationSchema, createToken } = require('../../helper/validationSchema.js');
 const user = require('../services/user.js');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 class UserRagistration{
-
-/*
-* Creating register api where user will enter his data.
-*/
+    /**
+     * 
+     * @description Creating the user for ragistration and saving its details 
+     * @param {*} res 
+     * @returns 
+     */
     createUser = (req, res) => {        
         // console.log(req.body);
     if(!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password ) {
@@ -50,46 +51,45 @@ class UserRagistration{
         else{
             res.status(200).send({
                 success : true,
-                message: "Congractulations",
+                message: "User Ragistered Successfully",
                 data : result
             });
         }
     });
-    }    
- 
-/*
-* Creating login api where user will enter his data for the login.
-*/
-
+    }  
+    /**
+     * 
+     * @description Created login using email, password
+     */   
+    
     createLogin = (req, res) => {
-    const loginData = {
-        email: req.body.email,
-        password: req.body.password
-    };
+        const loginData = {
+            email: req.body.email,
+            password: req.body.password
+        };
     // console.log(loginData);
-    user.createLogin(loginData, (error, result) =>{
-        if(error){
-            res.status(400).send({
-                success : false,
-                message: "User is not ragistered",
-                error
-            });
-        }
-        else{
-            res.status(200).send({
-                success : true,
-                message: "You are Logged in Successfully.",
-                Token : createToken(result),
-                data : result
-            });
-        }
-    });
-};
-
-/*
-* Creating forget api where user will enter his data for forget email id and password
-*/
-
+        user.createLogin(loginData, (error, result) =>{
+            if(error){
+                res.status(400).send({
+                    success : false,
+                    message: "User is not ragistered",
+                    error
+                });
+            }
+            else{
+                res.status(200).send({
+                    success : true,
+                    message: "You are Logged in Successfully.",
+                    Token : createToken(result),
+                    data : result
+                });
+            }
+        });
+    };
+        /**
+     * 
+     * @description Created Forget password.
+     */   
     forgetPassword = (req, res) => {
         const forgetData = {
             email: req.body.email,
@@ -112,9 +112,10 @@ class UserRagistration{
             }
         });
     }
-/*
-* Creating reset Password api where user will enter his data for forget password
-*/
+    /**
+     * 
+     * @description Created reset password
+     */   
     resetPassword = (req,res) => {
         try {
             const verifyPass = jwt.verify(req.headers.token ,process.env.JWT);
@@ -137,12 +138,12 @@ class UserRagistration{
                     });
                 }
             });
-        } catch (error) {
-            return res.status(400),send({
-                success: false,
-                message: 'Time-out, please try again to reset your password',
-                error
-            });
+        }   catch (error) {
+                return res.status(400).send({
+                    success: false,
+                    message: 'Time-out, please try again to reset your password',
+                    error
+                });
         }
        
     }
