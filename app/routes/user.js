@@ -10,18 +10,17 @@
  * 
  **************************************************************************/
 const user = require('../controllers/user.js');     
+    /**
+     * 
+     * @description Creating routes for all api of register, login, forget password and reset password.
+     */   
+    module.exports = (app) => {
+        
+        app.post('/register', user.createUser);
 
-/*
-* Creating routes for all api of register, login, forget password and reset password
-*/
+        app.post('/login', user.createLogin);
 
-module.exports = (app) => {
-    
-    app.post('/register', user.createUser);
+        app.post('/forgetPassword', user.forgetPassword);
 
-    app.post('/login', user.createLogin);
-
-    app.post('/forgetPassword', user.forgetPassword);
-
-    app.post('/resetPassword', user.resetPassword);
-}
+        app.post('/resetPassword', user.resetPassword);
+    }
