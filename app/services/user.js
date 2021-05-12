@@ -13,11 +13,10 @@
 const userRagistrationModel = require('../models/user.js');
 const bcrypt = require('bcrypt');
 const help = require ('../../helper/validationSchema.js');
-
-/*
-* Creating service file for all api of register, login, forget password and reset password
-*/
-
+    /**
+     * 
+     * @description Creating service file for all api of register, login, forget password and reset password
+     */
 class userData{
 
     createUser = (userData, callback) =>{
@@ -65,9 +64,7 @@ class userData{
         });
     };
 
-/*
-*  reset password service
-*/
+    
     resetPassword = (data ,callback) => {
         userRagistrationModel.resetPassword(data ,callback);
     }
