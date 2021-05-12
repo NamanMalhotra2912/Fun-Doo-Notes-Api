@@ -27,9 +27,9 @@ app.get('/', (req, res) => {
 require('./app/routes/user.js')(app);
 
 // listen for requests
-// app.listen(3000, async() => {
-//     console.log("Server is listening on port 3000");
-// });
+app.listen(3000, () => {
+    console.log("Server is listening on port 3000");
+});
 app.listen(port, async () => {
     var db = new MongoDBAdapter(process.env.DB_URI, {
       useNewUrlParser: true,
