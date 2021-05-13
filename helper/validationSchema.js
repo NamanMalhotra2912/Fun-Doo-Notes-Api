@@ -20,7 +20,7 @@ const ejs = require('ejs');
  * @description User ragistration schema with joi validation.
  */
 
-const ragistationSchema = joi.object({
+const registationSchema = joi.object({
     firstName : joi.string().min(3).pattern(/^[A-Z][a-zA-Z]{2}/) .required(),
     lastName : joi.string().pattern(/^[A-Z][a-zA-Z]{2}/) .required(),
     email : joi.string().email().required(),
@@ -71,14 +71,15 @@ const mail = (data) => {
         </button>`,
       };
     transporter.sendMail(mailOption, function(error, info){
-      if (error) {
-        console.log("this is the error from mailer "+ error);
-      } else {
-        console.log('Password Reset mail sent successfully, please check your mail.' + info.response);
-        }
+      // if (error) {
+      //   console.log("this is the error from mailer "+ error);
+      // } else {
+      //   console.log('Password Reset mail sent successfully, please check your mail.' + info.response);
+      //   }
+        (error) ? console.log("this is the error from mailer "+ error) : console.log('Password Reset mail sent successfully, please check your mail.' + info.response);
       });
     }
   });
 }
 
-module.exports = { ragistationSchema, createToken, mail };
+module.exports = { registationSchema, createToken, mail };
