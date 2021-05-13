@@ -10,7 +10,7 @@
  * 
  **************************************************************************/
 
-const userRagistrationModel = require('../models/user.js');
+const userRegistrationModel = require('../models/user.js');
 const bcrypt = require('bcrypt');
 const help = require ('../../helper/validationSchema.js');
     /**
@@ -20,11 +20,11 @@ const help = require ('../../helper/validationSchema.js');
 class userData{
 
     createUser = (userData, callback) =>{
-    userRagistrationModel.createUser(userData,callback);
+    userRegistrationModel.createUser(userData,callback);
     }
     
     createLogin = (loginData, callback) => {
-        userRagistrationModel.createLogin(loginData ,(_err, result) => {
+        userRegistrationModel.createLogin(loginData ,(_err, result) => {
             if (result) {
                 bcrypt.compare(loginData.password, result.password, (err, data) => {
                     if (err) {
@@ -49,7 +49,7 @@ class userData{
 
     forgetPassword = (data, callback) => {
         // console.log(data);
-        userRagistrationModel.forgetPassword(data, (err, result) => {
+        userRegistrationModel.forgetPassword(data, (err, result) => {
             if(result){
                 if(err){
                     callback(err,null);
@@ -66,7 +66,7 @@ class userData{
 
     
     resetPassword = (data ,callback) => {
-        userRagistrationModel.resetPassword(data ,callback);
+        userRegistrationModel.resetPassword(data ,callback);
     }
 }
 module.exports = new userData();
