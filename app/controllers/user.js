@@ -14,11 +14,11 @@ const { ragistationSchema, createToken } = require('../../helper/validationSchem
 const user = require('../services/user.js');
 const jwt = require('jsonwebtoken');
 
-class UserRagistration{
+class UserRegistration{
     /**
      * 
      * @description Creating the user for ragistration and saving its details 
-     * @param {*} res 
+     * @method Creted method for registrartion  
      * @returns 
      */
     createUser = (req, res) => {        
@@ -52,7 +52,7 @@ class UserRagistration{
             res.status(200).send({
                 success : true,
                 message: "User Ragistered Successfully",
-                data : result
+                // data : result
             });
         }
     });
@@ -81,7 +81,7 @@ class UserRagistration{
                     success : true,
                     message: "You are Logged in Successfully.",
                     Token : createToken(result),
-                    data : result
+                    // data : result
                 });
             }
         });
@@ -148,4 +148,4 @@ class UserRagistration{
        
     }
 };
-module.exports = new UserRagistration();
+module.exports = new UserRegistration();
