@@ -11,7 +11,10 @@
  **************************************************************************/
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
+    /**
+     * 
+     * @description Creating user schema for user details.
+     */
 const userSchema = mongoose.Schema({
     firstName: {
         type: String
@@ -48,31 +51,19 @@ userSchema.pre('save', async function (next) {
 
 const userModel = mongoose.model('User' ,userSchema);
 
-class userRagistrationModel {
+class userRegistrationModel {
     createUser = (userData ,callback) => {
         const user = new userModel(userData);
         user.save((err, userResult)=> {
-            if(err) {
-                callback(err ,null);
-            }else {
-                callback(null ,userResult);
-            }
+            (err) ? callback(err ,null) : callback(null ,userResult);
         });
     };
 
     createLogin = (loginData, callback) => {
-        // console.log(loginData);
-        userModel.findOne({email: loginData.email}, (err, result) =>{
-            if(err){
-                callback(err, null);
-            }else{
-                callback(null,result);
-            }
-        })
-    }
+        userModel.findOne({email: loginData.email}, callback)
+    };
 
     forgetPassword = (data,callback) => {
-        console.log(data);
         userModel.findOne({email: data.email} , callback)
     }
 
@@ -83,4 +74,4 @@ class userRagistrationModel {
     }
 }
 
-module.exports = new userRagistrationModel;
+module.exports = new userRegistrationModel;
