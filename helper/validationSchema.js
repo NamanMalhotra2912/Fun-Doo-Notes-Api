@@ -14,22 +14,21 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
-
 /**
- *
- * @description User ragistration schema with joi validation.
+ * 
+ * @var  registationSchema variable to pass joi object  
+ * @description Applyied the joi validation. 
  */
-
 const registationSchema = joi.object({
     firstName : joi.string().min(3).pattern(/^[A-Z][a-zA-Z]{2}/) .required(),
     lastName : joi.string().pattern(/^[A-Z][a-zA-Z]{2}/) .required(),
     email : joi.string().email().required(),
     password : joi.string().pattern(/^[A-Z][a-zA-Z0-9]{5,}[$&^!@#()|,;:<>?/%-+][0-9]{3,}/).required()
 });
-
 /**
- *
- * @description Using jsonwebtoken to genrate token.
+ * 
+ * @var  createToken to create the token.  
+ * @description Creating token for validation. 
  */
 const createToken = (result) => {
     const token = jwt.sign({ name: result.email }, process.env.JWT, { expiresIn: '1 day' });
@@ -67,7 +66,7 @@ const mail = (data) => {
         from: 'nmalhotra1289@gmail.com',
         to: data.email,
         subject: 'Reset password',
-        html: `${info}<button><a href="${'http://localhost:3000/forgetPassword/'}${createToken(data)}">Button</a>
+        html: `${info}<button><a href="${'http://localhost:3000/forgetPassword/'}${createToken(data)}">Reset Password</a>
         </button>`,
       };
     transporter.sendMail(mailOption, function(error, info){
@@ -82,4 +81,18 @@ const mail = (data) => {
   });
 }
 
+
+const verifyToken = (req, res, next) => {
+  try {
+    const decode = jwt.verify(req.headers.token, process.env.JWT);
+    req.userData = decode;
+    const userId = decode.id;
+    req.userId = userId;
+    next();
+  } catch (error) {
+    res.status(401).send({
+      error: 'Unauthorized....!!!!',
+    });
+  }
+};
 module.exports = { registationSchema, createToken, mail };
