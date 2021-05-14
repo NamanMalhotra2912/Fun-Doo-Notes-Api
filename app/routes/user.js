@@ -9,11 +9,12 @@
  * @version         : 1.0.0
  * 
  **************************************************************************/
-const user = require('../controllers/user.js');     
-    /**
-     * 
-     * @description Creating routes for all api of register, login, forget password and reset password.
-     */   
+    const user = require('../controllers/user.js');
+    const { verifyToken } = require('../../helper/validationSchema.js');
+    const note = require('../controllers/note');
+    /** 
+     * @description Creating the routes. 
+     */ 
     module.exports = (app) => {
         
         app.post('/register', user.createUser);
@@ -23,4 +24,17 @@ const user = require('../controllers/user.js');
         app.post('/forgetPassword', user.forgetPassword);
 
         app.post('/resetPassword', user.resetPassword);
+
+        app.post('/notes', verifyToken, note.createNote);
+
+        app.put('/notes/:noteId', verifyToken, note.updateNote);
+
+        app.get('/notes', cache, note.getNote);
+
+        app.get('/notes/:noteId', verifyToken, note.getNoteById);
+
+        app.delete('/notes/:noteId', verifyToken, note.deleteNote);
+
+        app.put('/notes/trash/:noteId', verifyToken, note.trashNote);
+
     }
