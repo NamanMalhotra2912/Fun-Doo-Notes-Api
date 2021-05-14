@@ -8,7 +8,7 @@
  * @author          : Neeraj Malhotra
  * @version         : 1.0.0
  * 
- **************************************************************************/
+**************************************************************************/
 
 const { ragistationSchema, createToken } = require('../../helper/validationSchema.js');
 const user = require('../services/user.js');
@@ -17,9 +17,9 @@ const jwt = require('jsonwebtoken');
 class UserRegistration{
     /**
      * 
-     * @description Creating the user for ragistration and saving its details 
-     * @method Creted method for registrartion  
-     * @returns 
+     * @method createUser method for registration  
+     * @description Creating the user for registration and saving its details 
+     * @returns registeration status.
      */
     createUser = (req, res) => {        
         // console.log(req.body);
@@ -59,9 +59,10 @@ class UserRegistration{
     }  
     /**
      * 
-     * @description Created login using email, password
-     */   
-    
+     * @method createLogin method for login  
+     * @description Creating the login for user 
+     * @returns login status.
+     */
     createLogin = (req, res) => {
         const loginData = {
             email: req.body.email,
@@ -86,10 +87,12 @@ class UserRegistration{
             }
         });
     };
-        /**
+    /**
      * 
-     * @description Created Forget password.
-     */   
+     * @method  forgetPassword method  
+     * @description Creating the login for user 
+     * @returns if correct email entered then will generate mail for reset password.
+     */
     forgetPassword = (req, res) => {
         const forgetData = {
             email: req.body.email,
@@ -114,14 +117,17 @@ class UserRegistration{
     }
     /**
      * 
-     * @description Created reset password
+     * @method  resetPassword method  
+     * @description Creating the reset password method to reset the password. 
+     * @returns returns the reset password status.
      */   
     resetPassword = (req,res) => {
         try {
             const verifyPass = jwt.verify(req.headers.token ,process.env.JWT);
+            console.log(verifyPass);
             const resetPass = {
                 password: req.body.password, 
-                email: verifyPass.data.email,
+                email: verifyPass.name,
             }
             user.resetPassword(resetPass ,(err,result) => {
                 if(err) {
@@ -134,7 +140,7 @@ class UserRegistration{
                   return res.status(200).send({
                         success: true,
                         message: 'Password reset is Successful ',
-                        result,
+                        // result,
                     });
                 }
             });
