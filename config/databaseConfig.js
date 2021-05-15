@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 ( 'use strict');
  
 var DEBUG_CONNECTING            = 'Connecting to db server %s...';
@@ -106,5 +108,22 @@ MongoDBAdapter.prototype.disconnect = function(){
  
   }.bind(this));
 };
- 
+
+var db = new MongoDBAdapter(process.env.DB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+});
+// console.log(db);
+db
+  .connect()
+  .then((uri) => {
+      console.log(uri);
+    console.log('Connected to ' + uri);
+  })
+  .catch((uri) => {
+    db.disconnect();
+    console.log('Disconnected from ' + uri);
+  });
 module.exports = MongoDBAdapter;
