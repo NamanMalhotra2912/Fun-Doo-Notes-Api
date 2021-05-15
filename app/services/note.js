@@ -20,16 +20,8 @@
    };
  
    getNote = (callback) => {
-       const KEY = 'notes';
        notemodel.getNote((err, result) => {
-           console.log('Entering Into Services....');
-           if (err) {
-             callback(err, null);
-           } else {
-               client.setex(KEY, 500, JSON.stringify(result));
-               console.log('result');
-               callback(null, result);
-           }
+           err ? callback(err, null) : callback(null, result); 
        });
    };
  
