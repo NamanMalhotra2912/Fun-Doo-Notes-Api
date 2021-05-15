@@ -2,7 +2,7 @@
  * @description Express.js is a back end web application framework for Node.js which can be used for writing business logic.
  */
 const express = require('express');
-const MongoDBAdapter = require('./config/databaseConfig.js');
+require('./config/databaseConfig.js');
 // const logger = require('./Logger/logger.js');
 
 const port = process.env.PORT;
@@ -33,23 +33,4 @@ require('./app/routes/user.js')(app);
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
-app.listen(port, async () => {
-    var db = new MongoDBAdapter(process.env.DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    });
-    // console.log(db);
-    await db
-      .connect()
-      .then((uri) => {
-          console.log(uri);
-        console.log('Connected to ' + uri);
-      })
-      .catch((uri) => {
-        db.disconnect();
-        console.log('Disconnected from ' + uri);
-      });
-    });
 module.exports = app;
