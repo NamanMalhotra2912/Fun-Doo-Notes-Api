@@ -10,34 +10,26 @@
  const note = require('../models/note');
  const notemodel = require('../models/note');
  
- class NoteService {
-   createNote = (noteInfo, callback) => {
-       notemodel.createNote(noteInfo, callback);
-   };
+class NoteService {
+    createNote = (noteInfo, callback) => {
+        notemodel.createNote(noteInfo, callback);
+    };
+        
+    updateNote = (noteData, callback) => {
+        notemodel.updateNote(noteData, callback);
+    };
     
-   updateNote = (noteData, callback) => {
-       notemodel.updateNote(noteData, callback);
-   };
- 
-   getNote = (callback) => {
-       notemodel.getNote((err, result) => {
-           err ? callback(err, null) : callback(null, result); 
-       });
-   };
- 
-   getNoteById = (Id, callback) => {
-        notemodel.getNoteById(Id, callback);
-   };
- 
-   deleteNote = (noteIds, callback) => {
-       notemodel.deleteNote(noteIds, callback);
-   };
- 
-   trashNote = (NoteIDs, callback) => {
-       notemodel.trashNote(NoteIDs, callback);
-   };
- }
+    retrieveNote = (callback) => {
+        notemodel.retrieveNote((err, result) => {
+            err ? callback(err, null) : callback(null, result); 
+        });
+    };
+    
+    deleteNote = (noteIds, callback) => {
+        notemodel.deleteNote(noteIds, callback);
+    };
+}
  
  
- module.exports = new NoteService();
+module.exports = new NoteService();
  
