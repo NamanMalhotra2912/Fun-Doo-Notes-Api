@@ -91,8 +91,8 @@ const verifyToken = (req, res, next) => {
     next();
   } catch (error) {
     res.status(401).send({
-      error: 'Unauthorized....!!!!',
+      error: 'Your token has expiered',
     });
   }
 };
-module.exports = { registationSchema, createToken, mail };
+module.exports = { registationSchema, createToken, mail, verifyToken };
