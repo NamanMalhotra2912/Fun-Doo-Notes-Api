@@ -17,13 +17,13 @@ const help = require ('../../helper/validationSchema.js');
      * 
      * @description Creating service file for all api of register, login, forget password and reset password
      */
-class userData{
+    class userData{
 
-    createUser = (userData, callback) =>{
-    userRegistrationModel.createUser(userData,callback);
-    }
+        createUser = (userData, callback) =>{
+        userRegistrationModel.createUser(userData,callback);
+        }
     
-    createLogin = (loginData, callback) => {
+        createLogin = (loginData, callback) => {
         userRegistrationModel.createLogin(loginData ,(_err, result) => {
             if (result) {
                 bcrypt.compare(loginData.password, result.password, (err, data) => {
@@ -47,7 +47,7 @@ class userData{
         });
     }
 
-    forgetPassword = (data, callback) => {
+        forgetPassword = (data, callback) => {
         // console.log(data);
         userRegistrationModel.forgetPassword(data, (err, result) => {
             if(result){
@@ -65,7 +65,7 @@ class userData{
     };
 
     
-    resetPassword = (data ,callback) => {
+        resetPassword = (data ,callback) => {
         userRegistrationModel.resetPassword(data ,callback);
     }
 }
