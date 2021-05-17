@@ -11,10 +11,12 @@
  **************************************************************************/
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-    /**
-     * 
-     * @description Creating user schema for user details.
-     */
+/**
+ * 
+ * @method  userSchema method  
+ * @description Creating the user schema for user details. 
+ * @returns save the encrypted password and other details.
+ */
 const userSchema = mongoose.Schema({
     firstName: {
         type: String
@@ -68,9 +70,10 @@ class userRegistrationModel {
     }
 
     resetPassword = async (data, callback) => {
+        console.log(data.email);
         const salt = await bcrypt.genSalt(10);
         const encrypt = await bcrypt.hash(data.password, salt);
-        userRagistrationModel.findOneAndUpdate({ email: data.email }, { password: encrypt } ,{new: true} ,callback)      
+        userRegistrationModel.findOneAndUpdate({email: data.email }, { password: encrypt } ,{new: true} ,callback(null,data))
     }
 }
 
