@@ -10,8 +10,8 @@
  * 
  **************************************************************************/
     const user = require('../controllers/user.js');
+    const note = require('../controllers/note.js');
     const { verifyToken } = require('../../helper/validationSchema.js');
-    const note = require('../controllers/note');
     /** 
      * @description Creating the routes. 
      */ 
@@ -29,12 +29,10 @@
 
         app.put('/notes/:noteId', verifyToken, note.updateNote);
 
-        app.get('/notes', cache, note.getNote);
+        app.get('/notes',verifyToken,  note.retrieveNote);
 
-        app.get('/notes/:noteId', verifyToken, note.getNoteById);
+        // app.get('/notes/:noteId', verifyToken, note.getNoteById);
 
         app.delete('/notes/:noteId', verifyToken, note.deleteNote);
-
-        app.put('/notes/trash/:noteId', verifyToken, note.trashNote);
 
     }
