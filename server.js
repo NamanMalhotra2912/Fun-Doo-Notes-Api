@@ -3,12 +3,10 @@
  */
 const express = require('express');
 require('./config/databaseConfig.js');
-// const logger = require('./Logger/logger.js');
+const logger = require('./Logger/logger');
 
 const port = process.env.PORT;
 // const host = process.env.HOST;
-
-const bodyParser = require('body-parser');
 
 // create express app
 const app = express();
@@ -31,6 +29,7 @@ require('./app/routes/user.js')(app);
 
 // listen for requests
 app.listen(3000, () => {
-    console.log("Server is listening on port 3000");
+    logger.log("info", "Server is listening on port 3000");
 });
+
 module.exports = app;
