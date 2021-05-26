@@ -59,7 +59,7 @@ MongoDBAdapter.prototype.connect = function(){
     }
  
     this.addConnectionListener('error', function(err){
-     console.logd(DEBUG_CONNECTION_ERROR, this.uri);
+     console.log(DEBUG_CONNECTION_ERROR, this.uri);
      return reject(err);
     });
  
