@@ -1,7 +1,7 @@
 /** ***********************************************************************
- * Execution        : 1. default node       cmd> nodemon server.js
+ * Execution        : 1. default node       cmd> npm start
  *
- * Purpose          : Having Business Logic of perticular API
+ * Purpose          : to create the service for note Api.
 
  * @file            : note.js
  * @author          : Neeraj Malhotra
