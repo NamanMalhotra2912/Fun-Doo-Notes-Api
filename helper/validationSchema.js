@@ -81,7 +81,6 @@ const mail = (data) => {
   });
 }
 
-
 const verifyToken = (req, res, next) => {
   try {
     const decode = jwt.verify(req.headers.token, process.env.JWT);
