@@ -1,8 +1,8 @@
 /*************************************************************************
  * Execution        : 1. default node       cmd> npm start
  * 
- * Purpose          : to hit Api of Ragistartion,Login,Forget Password, and Reset password
- *                    
+ * Purpose          : to hit Api of Ragistartion,Login,Forget Password, and Reset password for user.
+ *                  : to hit the Api of notes of Create, updatem retrieve and delete notes.
  * 
  * @file            : routes.js
  * @author          : Neeraj Malhotra
@@ -30,8 +30,6 @@
         app.put('/notes/:noteId', verifyToken, note.updateNote);
 
         app.get('/notes',verifyToken,  note.retrieveNote);
-
-        // app.get('/notes/:noteId', verifyToken, note.getNoteById);
 
         app.delete('/notes/:noteId', verifyToken, note.deleteNote);
 
