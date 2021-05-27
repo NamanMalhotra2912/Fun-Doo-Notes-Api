@@ -70,6 +70,7 @@ class UserRegistration{
         };
     // console.log(loginData);
         user.createLogin(loginData, (error, result) =>{
+            console.log(result);
             if(error){
                 res.status(400).send({
                     success : false,
