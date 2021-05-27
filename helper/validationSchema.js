@@ -31,8 +31,9 @@ const registationSchema = joi.object({
  * @description Creating token for validation. 
  */
 const createToken = (result) => {
-    const token = jwt.sign({ name: result.email }, process.env.JWT, { expiresIn: '1 day' });
-    console.log(token);
+  // console.log(result);
+    const token = jwt.sign({ email: result.data.email, id : result.data._id } , process.env.JWT, { expiresIn: '1 day' });
+    // console.log(token);
     return token;
 }
 
@@ -70,11 +71,6 @@ const mail = (data) => {
         </button>`,
       };
     transporter.sendMail(mailOption, function(error, info){
-      // if (error) {
-      //   console.log("this is the error from mailer "+ error);
-      // } else {
-      //   console.log('Password Reset mail sent successfully, please check your mail.' + info.response);
-      //   }
         (error) ? console.log("this is the error from mailer "+ error) : console.log('Password Reset mail sent successfully, please check your mail.' + info.response);
       });
     }
@@ -84,6 +80,7 @@ const mail = (data) => {
 const verifyToken = (req, res, next) => {
   try {
     const decode = jwt.verify(req.headers.token, process.env.JWT);
+    console.log(decode);
     req.userData = decode;
     const userId = decode.id;
     req.userId = userId;
