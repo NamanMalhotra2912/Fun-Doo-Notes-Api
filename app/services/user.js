@@ -32,7 +32,8 @@ const help = require ('../../helper/validationSchema.js');
                     }
                     if (data) {
                         const resultSuccess = {
-                            message: 'Successfully logeed in'
+                            // message: 'Successfully logeed in',
+                            data : result
                         };
                         callback(null ,resultSuccess)
 
