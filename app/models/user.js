@@ -61,8 +61,14 @@ class userRegistrationModel {
         });
     };
 
-    createLogin = (loginData, callback) => {
-        userModel.findOne({email: loginData.email}, callback)
+    createLogin = async (loginData, callback) => {
+        const check = await userModel.findOne({email: loginData.email})
+        // console.log(check);
+        if(check){
+            callback(null,check);
+        }else{
+            callback("login failed");
+        }
     };
 
     forgetPassword = (data,callback) => {
