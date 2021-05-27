@@ -6,9 +6,13 @@ Here I have this for user ragistration, login, forget password and reset passwor
 
 To run this repo you need to clone it and after that you need to install npm package.
 
-# Command To clone this repository - git clone https://github.com/NamanMalhotra2912/FunDooNotesApi
+# Command To clone this repository : 
 
-# Command to install npm - npm install
+git clone https://github.com/NamanMalhotra2912/FunDooNotesApi
+
+# Command to install npm :
+
+ npm install
 
 Above comamand will install some packages and then you can run your code with npm start command.
 
