@@ -9,7 +9,12 @@
  ************************************************************************* */
 const mongoose = require('mongoose');
 const note = require('../services/note.js');
- 
+  /**
+   * 
+   * @method  noteSchema method  
+   * @description Creating the notes schema. 
+   * 
+   */
   const noteSchema = mongoose.Schema({
     title: {
       type: String, 
@@ -42,7 +47,9 @@ const note = require('../services/note.js');
   });
  
 const noteModel = mongoose.model('Note', noteSchema);
- 
+/**
+ * @description created NoteModel class for note api.
+ */ 
 class NoteModel {
     createNote = (noteInfo, callback) => {
       const note = new noteModel({
