@@ -98,7 +98,7 @@ class NoteApi
         catch(error){
             res.status(500).send({
                 success : false,
-                message : "There is some internal error from server"
+                message : "There is some internal error from server."
             })
         }
     };
