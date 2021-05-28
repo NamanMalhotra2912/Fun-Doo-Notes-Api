@@ -18,7 +18,6 @@ const help = require ('../../helper/validationSchema.js');
      * @description Creating service file for all api of register, login, forget password and reset password
      */
     class userData{
-
         createUser = (userData, callback) =>{
         userRegistrationModel.createUser(userData,callback);
         }
