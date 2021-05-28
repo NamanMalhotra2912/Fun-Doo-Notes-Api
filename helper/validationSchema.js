@@ -31,7 +31,7 @@ const registationSchema = joi.object({
  * @description Creating token for validation. 
  */
 const createToken = (result) => {
-  // console.log(result);
+  console.log(result);
     const token = jwt.sign({ email: result.data.email, id : result.data._id } , process.env.JWT, { expiresIn: '1 day' });
     // console.log(token);
     return token;
