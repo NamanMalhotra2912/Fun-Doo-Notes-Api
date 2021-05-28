@@ -1,7 +1,7 @@
 /** ***********************************************************************
  * Execution        : 1. default node       cmd> npm start
  *
- * Purpose          : to create the service for note Api.
+ * Purpose          : to create the service for business logic of note Api.
 
  * @file            : note.js
  * @author          : Neeraj Malhotra
@@ -9,7 +9,11 @@
  ************************************************************************* */
  const note = require('../models/note');
  const notemodel = require('../models/note');
- 
+
+ /**
+ * @class NoteService to include all notes api.
+ * @description create service file to apply business logic for api.
+ */ 
 class NoteService {
     createNote = (noteInfo, callback) => {
         notemodel.createNote(noteInfo, callback);
@@ -29,7 +33,6 @@ class NoteService {
         notemodel.deleteNote(noteIds, callback);
     };
 }
- 
- 
+  
 module.exports = new NoteService();
  
