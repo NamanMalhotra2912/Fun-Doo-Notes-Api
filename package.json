@@ -26,6 +26,7 @@
     "mocha": "^8.4.0",
     "mongoose": "^5.12.7",
     "nodemailer": "^6.6.0",
+    "redis": "^3.1.2",
     "swagger-ui-express": "^4.1.6",
     "winston": "^3.3.3"
   },
