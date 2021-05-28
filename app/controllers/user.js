@@ -21,41 +21,47 @@ class UserRegistration{
      * @description Creating the user for registration and saving its details 
      * @returns registeration status.
      */
-    createUser = (req, res) => {        
-        // console.log(req.body);
-    if(!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password ) {
-        return res.status(400).send({
-            message : "Fields can't be empty, please fill all details."
-        })
-    }
+    createUser = (req, res) => {    
+        try{    
+            if(!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password ) {
+                return res.status(400).send({
+                    message : "Fields can't be empty, please fill all details."
+                })
+            }
 
-    const checkValidation = ragistationSchema.validate(req.body);
-        if (checkValidation.error){
-            return res.send("Please enter correct details for ragistration.");
-        }        
-        const userDetails = {
-            firstName: req.body.firstName, 
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: req.body.password
-        };
+            const checkValidation = ragistationSchema.validate(req.body);
+                if (checkValidation.error){
+                    return res.send("Please enter correct details for ragistration.");
+                }        
+                const userDetails = {
+                    firstName: req.body.firstName, 
+                    lastName: req.body.lastName,
+                    email: req.body.email,
+                    password: req.body.password
+                };
 
-        user.createUser(userDetails, (error, result) =>{
-        if(error){
-            res.status(400).send({
+                user.createUser(userDetails, (error, result) =>{
+                if(error){
+                    res.status(400).send({
+                        success : false,
+                        message: "Email already exist.",
+                        error
+                    });
+                }
+                else{
+                    res.status(200).send({
+                        success : true,
+                        message: "User Ragistered Successfully",
+                        // data : result
+                    });
+                }
+            });
+        }catch(error){
+            res.status(500).send({
                 success : false,
-                message: "Email already exist.",
-                error
-            });
+                message : "There is some internal error from server"
+            })
         }
-        else{
-            res.status(200).send({
-                success : true,
-                message: "User Ragistered Successfully",
-                // data : result
-            });
-        }
-    });
     }  
     /**
      * 
@@ -64,29 +70,36 @@ class UserRegistration{
      * @returns login status.
      */
     createLogin = (req, res) => {
-        const loginData = {
-            email: req.body.email,
-            password: req.body.password
-        };
-    // console.log(loginData);
-        user.createLogin(loginData, (error, result) =>{
-            console.log(result);
-            if(error){
-                res.status(400).send({
-                    success : false,
-                    message: "User is not ragistered",
-                    error
-                });
-            }
-            else{
-                res.status(200).send({
-                    success : true,
-                    message: "You are Logged in Successfully.",
-                    Token : createToken(result),
-                    // data : result
-                });
-            }
-        });
+        try{
+            const loginData = {
+                email: req.body.email,
+                password: req.body.password
+            };
+        // console.log(loginData);
+            user.createLogin(loginData, (error, result) =>{
+                // console.log(result);
+                if(error){
+                    res.status(400).send({
+                        success : false,
+                        message: "User is not ragistered",
+                        error
+                    });
+                }
+                else{
+                    res.status(200).send({
+                        success : true,
+                        message: "You are Logged in Successfully.",
+                        Token : createToken(result),
+                        // data : result
+                    });
+                }
+            });
+        }catch(error){
+            res.status(500).send({
+                success : false,
+                message : "There is some internal error from server"
+            })
+        }
     };
     /**
      * 
@@ -95,26 +108,33 @@ class UserRegistration{
      * @returns if correct email entered then will generate mail for reset password.
      */
     forgetPassword = (req, res) => {
-        const forgetData = {
-            email: req.body.email,
-        };
-        console.log(forgetData);
-        user.forgetPassword(forgetData, (error, result) =>{
-            if(error){
-                res.status(500).send({
-                    success : false,
-                    message: "Sorry, please check and share correct details.",
-                    error
-                });
-            }
-            else{
-                res.status(200).send({
-                    success : true,
-                    message: "You can reset your password, and mail will be sent to you shortly.",
-                    result
-                });
-            }
-        });
+        try{
+            const forgetData = {
+                email: req.body.email,
+            };
+            console.log(forgetData);
+            user.forgetPassword(forgetData, (error, result) =>{
+                if(error){
+                    res.status(500).send({
+                        success : false,
+                        message: "Sorry, please check and share correct details.",
+                        error
+                    });
+                }
+                else{
+                    res.status(200).send({
+                        success : true,
+                        message: "You can reset your password, and mail will be sent to you shortly.",
+                        result
+                    });
+                }
+            });
+        }catch(error){
+            res.status(500).send({
+                success : false,
+                message : "There is some internal error from server"
+            })
+        }
     }
     /**
      * 
@@ -140,17 +160,17 @@ class UserRegistration{
                 } else {
                   return res.status(200).send({
                         success: true,
-                        message: 'Password reset is Successful ',
+                        message: 'Password reset is Successful',
                         // result,
                     });
                 }
             });
-        }   catch (error) {
-                return res.status(400).send({
-                    success: false,
-                    message: 'Time-out, please try again to reset your password',
-                    error
-                });
+        }catch (error) {
+            return res.status(400).send({
+                success: false,
+                message: 'Time-out, please try again to reset your password',
+                error
+            });
         }
        
     }
