@@ -11,7 +11,7 @@
  **************************************************************************/
     const user = require('../controllers/user.js');
     const note = require('../controllers/note.js');
-    const { verifyToken } = require('../../helper/validationSchema.js');
+    const { verifyToken, redisMiddleWare } = require('../../helper/validationSchema.js');
     /** 
      * @description Creating the routes. 
      */ 
@@ -29,7 +29,7 @@
 
         app.put('/notes/:noteId', verifyToken, note.updateNote);
 
-        app.get('/notes',verifyToken,  note.retrieveNote);
+        app.get('/notes',verifyToken,redisMiddleWare,  note.retrieveNote);
 
         app.delete('/notes/:noteId', verifyToken, note.deleteNote);
 
