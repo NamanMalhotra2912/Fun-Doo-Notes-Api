@@ -14,6 +14,9 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
+const redis = require('redis');
+const client = redis.createClient();
+
 /**
  * 
  * @var  registationSchema variable to pass joi object  
@@ -91,4 +94,39 @@ const verifyToken = (req, res, next) => {
     });
   }
 };
-module.exports = { registationSchema, createToken, mail, verifyToken };
+
+function setRedis(KEY, value) {
+  client.setex(KEY, 60, JSON.stringify(value));
+}
+
+const redisMiddleWare = (req,res,next) =>{
+    client.get('key',(err,redis_data) =>{
+        if(err){
+            throw err
+        }else if (redis_data){
+          console.log(redis_data);
+            res.send(JSON.parse(redis_data))
+        }else{
+            next();
+        }
+    })
+}
+// const getPost = async (req,res) => {
+//     try{
+//         console.log("Fetching data");
+//         const token = req.query.auth
+//         const post = await post.find
+//         // res.send(post)
+//         if(!post){
+//             return res.send("Currently there is no posts");
+//         }
+//         console.log(psot);
+//         client.SETEX('postData',60,post)
+//         res.send(post)
+//     }catch(error){
+//         console.log(error);
+//         res.status(500).send(error)
+//     }
+// }
+
+module.exports = { registationSchema, createToken, mail, verifyToken,setRedis,redisMiddleWare };
