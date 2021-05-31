@@ -53,15 +53,7 @@ const mail = (data) => {
         pass: process.env.PASS,
       },
     });
-  
-  // var mailOptions = {
-  //   from: 'nmalhotra1289@gmail.com',
-  //   to: 'nmalhotra1289@gmail.com',
-  //   subject: 'Sending Email using Node.js for reset password',
-  //   text: `Hi Raj, You can follow below shared link to reset your password.`,
-  //   html: '<h1>Hi Raj</h1> <p>Please follow the link shared below.</p>' 
-  // };
-
+    
   ejs.renderFile('app/mail/mail.ejs', (error, info) => {
     if (error) {
       console.log('error', error);
@@ -83,7 +75,7 @@ const mail = (data) => {
 const verifyToken = (req, res, next) => {
   try {
     const decode = jwt.verify(req.headers.token, process.env.JWT);
-    console.log(decode);
+    // console.log(decode);
     req.userData = decode;
     const userId = decode.id;
     req.userId = userId;
@@ -95,38 +87,21 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-function setRedis(KEY, value) {
-  client.setex(KEY, 60, JSON.stringify(value));
+const redisFunction =  (KEY, value)=> {
+  client.setex(KEY, 1200, JSON.stringify(value));
 }
 
 const redisMiddleWare = (req,res,next) =>{
-    client.get('key',(err,redis_data) =>{
+    client.get('note',(err,note) =>{
         if(err){
             throw err
-        }else if (redis_data){
-          console.log(redis_data);
-            res.send(JSON.parse(redis_data))
+        }else if (note){
+          console.log(note);
+            res.send(JSON.parse(note))
         }else{
             next();
         }
     })
 }
-// const getPost = async (req,res) => {
-//     try{
-//         console.log("Fetching data");
-//         const token = req.query.auth
-//         const post = await post.find
-//         // res.send(post)
-//         if(!post){
-//             return res.send("Currently there is no posts");
-//         }
-//         console.log(psot);
-//         client.SETEX('postData',60,post)
-//         res.send(post)
-//     }catch(error){
-//         console.log(error);
-//         res.status(500).send(error)
-//     }
-// }
 
-module.exports = { registationSchema, createToken, mail, verifyToken,setRedis,redisMiddleWare };
+module.exports = { registationSchema, createToken, mail, verifyToken,redisFunction,redisMiddleWare };
