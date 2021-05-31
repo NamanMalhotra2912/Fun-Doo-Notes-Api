@@ -2,8 +2,9 @@
  * @description Express.js is a back end web application framework for Node.js which can be used for writing business logic.
  */
 const express = require('express');
-require('./config/databaseConfig.js');
 const logger = require('./Logger/logger');
+require('./config/databaseConfig.js');
+require('./config/redisDatabaseConfig.js');
 
 const port = process.env.PORT;
 // const host = process.env.HOST;
