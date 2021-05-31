@@ -81,7 +81,7 @@ class NoteApi
 
             noteServices.updateNote(noteData, (err, noteResult) => {
                 if(noteResult === null) {
-                    return res.status(404).send({
+                    return res.status(400).send({
                         success: false,
                         message: 'Please check your Id again' + res.params.noteId,
                         err,
