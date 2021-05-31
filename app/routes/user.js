@@ -29,7 +29,7 @@
 
         app.put('/notes/:noteId', verifyToken, note.updateNote);
 
-        app.get('/notes',verifyToken,redisMiddleWare,  note.retrieveNote);
+        app.get('/notes',verifyToken, note.retrieveNote);
 
         app.delete('/notes/:noteId', verifyToken, note.deleteNote);
 
