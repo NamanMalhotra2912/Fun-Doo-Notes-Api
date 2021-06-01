@@ -14,7 +14,7 @@ npm install
 
 Above comamand will install some packages and that will help you to run your code.
 
-# Use command to run the code from terminal:
+### Use command to run the code from terminal:
 npm start
 
 and this command will start the server to run the code.
