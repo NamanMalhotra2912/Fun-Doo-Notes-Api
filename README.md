@@ -1,28 +1,24 @@
-# FunDooNotesApi
+# FunDooNotesApp
 
-This is the Fun Doo Notes Api similar to google keep.
+# Discription
+This is the Fun Doo Notes Api where we have user ragistration, user login, forget password and reset password api's.
+To run this project you need to clone this repository and then you can install npm package.
 
-Here I have this for user ragistration, login, forget password and reset password.
-
-To run this repo you need to clone it and after that you need to install npm package.
-
-# Command To clone this repository : 
+# To clone this repository : 
 
 git clone https://github.com/NamanMalhotra2912/FunDooNotesApi
 
-# Command to install npm :
+# npm installation :
 
- npm install
+npm install
 
-Above comamand will install some packages and then you can run your code with npm start command.
+Above comamand will install some packages and that will help you to run your code.
 
-Here first we have Create user where user will register himself or herself.
+# Use command to run the code from terminal:
+npm start
 
-After that you can use login part to do the login and then if you forget your passowrd,
+and this command will start the server to run the code.
 
-Then you can use forget password api which will sent you a mail on your registered email id.
-
-With the email you can use reset password.
 
 # Note Api
 
