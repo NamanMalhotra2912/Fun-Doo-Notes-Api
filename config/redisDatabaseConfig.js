@@ -1,3 +1,7 @@
+/**
+ * 
+ * @description creating redis database config for connectiong redis cache server.
+ */
 const redis = require("redis");
 const client = redis.createClient();
 client.on("error",function(error){
