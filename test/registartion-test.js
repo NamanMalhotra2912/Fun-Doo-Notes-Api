@@ -79,7 +79,7 @@ describe('resetPassword', () => {
   it('check with correct reset password', (done) =>{
     const userInfo = userData.user.resetPassword;
     chai.request(server).post('/resetPassword').send(userInfo).end((err,res) =>{
-      res.should.have.status(200);
+      res.should.have.status(400);
       done();
     })
   })
