@@ -1,0 +1,18 @@
+{
+    "notes": {
+        "genratedToken": {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5tYWxob3RyYTEyODlAZ21haWwuY29tIiwiaWQiOiI2MDljMWE0ZWM1ZTdjMzQ1ODA5ZDE5ODQiLCJpYXQiOjE2MjI1MTkzNDMsImV4cCI6MTYyMjYwNTc0M30._p98wEohsDV7k-xULzjMgCcMYqjyTaiVcZpwi770-CU"
+        },
+        "createNote": {
+            "title": "google keep",
+            "description": "Welcome to google keep backend part"
+        },
+        "createNoteWithWrongData": {
+            "title": "Successful"
+        },
+        "updateNoteDetails": {
+            "title": "note updated",
+            "description": "updated the google keep note"
+        }
+    }
+}
