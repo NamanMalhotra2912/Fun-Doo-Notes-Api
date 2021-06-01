@@ -19,6 +19,17 @@ npm start
 
 and this command will start the server to run the code.
 
+### Using PostMan to genrate request for server :
+
+Here we are using Post Man as another tool to genrate request to perform Crud operations.
+
+## Added Note Api
+
+You can use this api to perform Crud operations on notes which include create, update, retrieve, and delete.
+
+### Test cases :
+
+Added test cases as well to test our api's
 
 Author : 
 Neeraj Malhotra
