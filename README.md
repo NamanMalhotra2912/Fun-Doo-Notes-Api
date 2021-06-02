@@ -23,17 +23,17 @@ and this command will start the server to run the code.
 
 Here we are using Post Man as another tool to genrate request to perform Crud operations.
 
-### Use command to run the test cases :
-npm run test or
-npm run coverage
-
 ## Added Note Api
 
 You can use this api to perform Crud operations on notes which include create, update, retrieve, and delete.
 
 ### Test cases :
 
-Added test cases as well to test our api's
+### Added test cases as well to test our api's
+### Use command to run the test cases :
+npm run test or
+npm run coverage
+
 
 Author : 
 Neeraj Malhotra
