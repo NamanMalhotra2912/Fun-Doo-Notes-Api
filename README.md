@@ -14,7 +14,7 @@ npm install
 
 Above comamand will install some packages and that will help you to run your code.
 
-### Use command to run the code from terminal:
+### Use command to run the code from terminal :
 npm start
 
 and this command will start the server to run the code.
@@ -22,6 +22,10 @@ and this command will start the server to run the code.
 ### Using PostMan to genrate request for server :
 
 Here we are using Post Man as another tool to genrate request to perform Crud operations.
+
+### Use command to run the test cases :
+npm run test or
+npm run coverage
 
 ## Added Note Api
 
