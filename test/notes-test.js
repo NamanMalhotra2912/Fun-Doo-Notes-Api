@@ -44,17 +44,17 @@
 
  describe('updateNote', () => {
   it('given_Correct_Details_Should_Be_Able_To_Update_Note', (done) => {
-    chai.request(server).put('/notes/60b5ae6a67f4f727fc93b6d6').set('token', `${noteData.notes.genratedToken.token}`)
+    chai.request(server).put('/notes/60b700f1ad79c735800ccba3').set('token', `${noteData.notes.genratedToken.token}`)
       .send(noteData.notes.updateNoteDetails).end((err, res) => {
         res.should.have.status(200);
-        done();
       });
+      done();
   });
 });
 
 describe('inCorrectUpdateNote', () => {
   it('given_inCorrect_Details_Should_Not_Be_Able_To_Update_Note', (done) => {
-    chai.request(server).put('/notes/60b56f4f727fc93b6d6').set('token', `${noteData.notes.genratedToken.token}`)
+    chai.request(server).put('/notes/60b5ae6a67f4ffc93b6d6').set('token', `${noteData.notes.genratedToken.token}`)
       .send(noteData.notes.updateNoteDetails).end((err, res) => {
         res.should.have.status(200);
         
@@ -68,6 +68,16 @@ describe('retreiveNotes', () => {
     chai.request(server).get('/notes').set('token', `${noteData.notes.genratedToken.token}`)
       .send().end((err, res) => {
         res.should.have.status(200);
+        done();
+      });
+  });
+});
+
+describe('deleteNotes', () => {
+  it('given_Correct_Details_should_Delete_Note', (done) => {
+    chai.request(server).delete('/notes/60ab2657c154d831f0b562a2').set('token', `${noteData.notes.genratedToken.token}`)
+      .send().end((err, res) => {
+        res.should.have.status(404);
         done();
       });
   });
