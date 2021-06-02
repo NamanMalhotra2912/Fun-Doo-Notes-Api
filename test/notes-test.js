@@ -52,16 +52,15 @@
   });
 });
 
-describe('inCorrectUpdateNote', () => {
-  it('given_inCorrect_Details_Should_Not_Be_Able_To_Update_Note', (done) => {
-    chai.request(server).put('/notes/60b5ae6a67f4ffc93b6d6').set('token', `${noteData.notes.genratedToken.token}`)
-      .send(noteData.notes.updateNoteDetails).end((err, res) => {
-        res.should.have.status(200);
-        
-      });
-      done();
-  });
-});
+// describe('inCorrectUpdateNote', () => {
+//   it('given_inCorrect_Details_Should_Not_Be_Able_To_Update_Note', (done) => {
+//     chai.request(server).put('/notes/60b5ae6a67f4ffc93b6d6').set('token', `${noteData.notes.genratedToken.token}`)
+//       .send(noteData.notes.updateNoteDetails).end((err, res) => {
+//         res.should.have.status(200);
+//       });
+//       done();
+//   });
+// });
 
 describe('retreiveNotes', () => {
   it('given_Correct_Details_should_Retrive_Note', (done) => {
