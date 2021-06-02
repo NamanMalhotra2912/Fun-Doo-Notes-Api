@@ -10,59 +10,59 @@
  * 
 **************************************************************************/
 
-const { ragistationSchema, createToken } = require('../../helper/validationSchema.js');
+const { registationSchema, createToken } = require('../../helper/validationSchema.js');
 const user = require('../services/user.js');
 const jwt = require('jsonwebtoken');
 
-class UserRegistration{
+class UserRegistration {
     /**
      * 
      * @method createUser method for registration  
      * @description Creating the user for registration and saving its details 
      * @returns registeration status.
      */
-    createUser = (req, res) => {    
-        try{    
-            if(!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password ) {
+    createUser = (req, res) => {
+        try {
+            const userDetails = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                password: req.body.password
+            };
+            if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password) {
                 return res.status(400).send({
-                    message : "Fields can't be empty, please fill all details."
+                    message: "Fields can't be empty, please fill all details."
                 })
             }
 
-            const checkValidation = ragistationSchema.validate(req.body);
-                if (checkValidation.error){
-                    return res.send("Please enter correct details for ragistration.");
-                }        
-                const userDetails = {
-                    firstName: req.body.firstName, 
-                    lastName: req.body.lastName,
-                    email: req.body.email,
-                    password: req.body.password
-                };
-
-                user.createUser(userDetails, (error, result) =>{
-                if(error){
+            const checkValidation = registationSchema.validate(userDetails);
+            if (checkValidation.error) {
+                res.send({ message: "Please enter correct details for ragistration." });
+                return;
+            }
+            user.createUser(userDetails, (error, result) => {
+                if (error) {
                     res.status(400).send({
-                        success : false,
+                        success: false,
                         message: "Email already exist.",
                         error
                     });
                 }
-                else{
+                else {
                     res.status(200).send({
-                        success : true,
+                        success: true,
                         message: "User Ragistered Successfully",
                         // data : result
                     });
                 }
             });
-        }catch(error){
+        } catch (error) {
             res.status(500).send({
-                success : false,
-                message : "There is some internal error from server"
+                success: false,
+                message: "There is some internal error from server"
             })
         }
-    }  
+    }
     /**
      * 
      * @method createLogin method for login  
@@ -70,34 +70,32 @@ class UserRegistration{
      * @returns login status.
      */
     createLogin = (req, res) => {
-        try{
+        try {
             const loginData = {
                 email: req.body.email,
                 password: req.body.password
             };
-        // console.log(loginData);
-            user.createLogin(loginData, (error, result) =>{
-                // console.log(result);
-                if(error){
+            user.createLogin(loginData, (error, result) => {
+                if (error) {
                     res.status(400).send({
-                        success : false,
+                        success: false,
                         message: "User is not ragistered",
                         error
                     });
                 }
-                else{
+                else {
                     res.status(200).send({
-                        success : true,
+                        success: true,
                         message: "You are Logged in Successfully.",
-                        Token : createToken(result),
+                        Token: createToken(result),
                         // data : result
                     });
                 }
             });
-        }catch(error){
+        } catch (error) {
             res.status(500).send({
-                success : false,
-                message : "There is some internal error from server"
+                success: false,
+                message: "There is some internal error from server"
             })
         }
     };
@@ -108,31 +106,30 @@ class UserRegistration{
      * @returns if correct email entered then will generate mail for reset password.
      */
     forgetPassword = (req, res) => {
-        try{
+        try {
             const forgetData = {
                 email: req.body.email,
             };
-            console.log(forgetData);
-            user.forgetPassword(forgetData, (error, result) =>{
-                if(error){
+            user.forgetPassword(forgetData, (error, result) => {
+                if (error) {
                     res.status(500).send({
-                        success : false,
+                        success: false,
                         message: "Sorry, please check and share correct details.",
                         error
                     });
                 }
-                else{
+                else {
                     res.status(200).send({
-                        success : true,
+                        success: true,
                         message: "You can reset your password, and mail will be sent to you shortly.",
                         result
                     });
                 }
             });
-        }catch(error){
+        } catch (error) {
             res.status(500).send({
-                success : false,
-                message : "There is some internal error from server"
+                success: false,
+                message: "There is some internal error from server"
             })
         }
     }
@@ -141,38 +138,37 @@ class UserRegistration{
      * @method  resetPassword method  
      * @description Creating the reset password method to reset the password. 
      * @returns returns the reset password status.
-     */   
-    resetPassword = (req,res) => {
+     */
+    resetPassword = (req, res) => {
         try {
-            const verifyPass = jwt.verify(req.headers.token ,process.env.JWT);
-            console.log(verifyPass);
+            const verifyPass = jwt.verify(req.headers.token, process.env.JWT);
             const resetPass = {
-                password: req.body.password, 
+                password: req.body.password,
                 email: verifyPass.name,
             }
-            user.resetPassword(resetPass ,(err,result) => {
-                if(err) {
-                  return res.status(401).send({
+            user.resetPassword(resetPass, (err, result) => {
+                if (err) {
+                    return res.status(401).send({
                         success: false,
                         message: 'Un-authorized access to reset your password',
                         err,
                     });
                 } else {
-                  return res.status(200).send({
+                    return res.status(200).send({
                         success: true,
                         message: 'Password reset is Successful',
                         // result,
                     });
                 }
             });
-        }catch (error) {
+        } catch (error) {
             return res.status(400).send({
                 success: false,
                 message: 'Time-out, please try again to reset your password',
                 error
             });
         }
-       
+
     }
 };
 module.exports = new UserRegistration();
