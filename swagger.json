@@ -1,15 +1,194 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is User Ragistration Api",
         "version": "1.0.0",
-        "title": "User Ragistration Api"
+        "title": "FundooNoteApp",
+        "description": "This app is build for creating user api"
     },
-    "host": "localhost3000",
-    "tags" : [
+    "host": "localhost:3000",
+    "tags": [
         {
-            "name" : "FunDooNotesApi",
-            "descrittion" : "Creating User Ragistration and Login Api."
+            "name": "FundooNotes",
+            "description": "API for user registration"
         }
-    ]
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Creating a new note",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "This is the fundoo note"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "400": {
+                        "description": "Note not created successfully"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "login to FundooNotes",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "login"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "logged in successful"
+                    },
+                    "400": {
+                        "description": "login failed, please try again"
+                    }
+                }
+            }
+        },
+        "/forgotPassword": {
+            "post": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Forgot Password",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "forgot password"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "we have sent an email, plase check."
+                    },
+                    "400": {
+                        "description": "mailing error, mail can't be send"
+                    }
+                }
+            }
+        },
+        "/resetPassword": {
+            "post": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Reset Password in FundooNotes",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "reset password"
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "token verification",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "password reset successful"
+                    },
+                    "400": {
+                        "description": "failed to reset your password"
+                    }
+                }
+            }
+        },
+        "/notes": {
+            "post": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Create notes api",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "craete note"
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "an authorization token",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "note created successfully"
+                    },
+                    "400": {
+                        "description": "failed to create note"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Get all notes from FundooNotes",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "an authorization token",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "got all notes successfully"
+                    },
+                    "400": {
+                        "description": "failed to get notes"
+                    }
+                }
+            }
+        }
+        
+    }
 }
