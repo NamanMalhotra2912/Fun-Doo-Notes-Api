@@ -43,7 +43,7 @@
                         "description": "Successful"
                     },
                     "400": {
-                        "description": "Note not created successfully"
+                        "description": "Failure : Note not created successfully"
                     }
                 }
             }
@@ -53,7 +53,7 @@
                 "tags": [
                     "FundooNotes"
                 ],
-                "summary": "login to FundooNotes",
+                "summary": "Login to FundooNotes",
                 "parameters": [
                     {
                         "in": "body",
@@ -66,15 +66,15 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "logged in successful"
+                        "description": "Logged in successful"
                     },
                     "400": {
-                        "description": "login failed, please try again"
+                        "description": "Login failed, please try again"
                     }
                 }
             }
         },
-        "/forgotPassword": {
+        "/forgetPassword": {
             "post": {
                 "tags": [
                     "FundooNotes"
@@ -92,10 +92,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "we have sent an email, plase check."
+                        "description": "We have sent an email, plase check."
                     },
                     "400": {
-                        "description": "mailing error, mail can't be send"
+                        "description": "Mailing error, mail can't be send"
                     }
                 }
             }
@@ -124,10 +124,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "password reset successful"
+                        "description": "Password reset successful"
                     },
                     "400": {
-                        "description": "failed to reset your password"
+                        "description": "Failed to reset your password, please check again"
                     }
                 }
             }
@@ -156,10 +156,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "note created successfully"
+                        "description": "Note created successfully"
                     },
                     "400": {
-                        "description": "failed to create note"
+                        "description": "Failed to create note"
                     }
                 }
             },
@@ -167,7 +167,7 @@
                 "tags": [
                     "FundooNotes"
                 ],
-                "summary": "Get all notes from FundooNotes",
+                "summary": "Retrieve notes from FundooNotes",
                 "parameters": [
                     {
                         "in": "header",
@@ -181,14 +181,78 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "got all notes successfully"
+                        "description": "Notes retrieved successfully"
                     },
                     "400": {
-                        "description": "failed to get notes"
+                        "description": "Failed to get notes"
                     }
                 }
             }
-        }
-        
+        },"/notes/{id}":{
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "Please enter the id for the note",
+                    "type":"string"
+                }
+            ],
+            "put": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Update note in FundooNotes",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Updated an existing note"
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "an authorization token",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update note successfully"
+                    },
+                    "400": {
+                        "description": "Failed to update the note"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Delete note",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "an authorization token",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "note deleted"
+                    },
+                    "400": {
+                        "description": "failed to delete notes"
+                    }
+                }
+            }
+        }        
     }
 }
