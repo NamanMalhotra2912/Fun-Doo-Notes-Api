@@ -29,7 +29,8 @@ You can use this api to perform Crud operations on notes which include create, u
 
 ### Test cases :
 
-### Added test cases as well to test our api's
+Added test cases as well to test our api's
+
 ### Use command to run the test cases :
 npm run test or
 npm run coverage
