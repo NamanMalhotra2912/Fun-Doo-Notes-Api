@@ -23,10 +23,10 @@ const client = redis.createClient();
  * @description Applyied the joi validation. 
  */
 const registationSchema = joi.object({
-    firstName : joi.string().min(3).pattern(/^[A-Z][a-zA-Z]{2}/) .required(),
-    lastName : joi.string().pattern(/^[A-Z][a-zA-Z]{2}/) .required(),
-    email : joi.string().email().required(),
-    password : joi.string().pattern(/^[A-Z][a-zA-Z0-9]{5,}[$&^!@#()|,;:<>?/%-+][0-9]{3,}/).required()
+  firstName: joi.string().min(3).pattern(/^[A-Z][a-zA-Z]{2}/).required(),
+  lastName: joi.string().pattern(/^[A-Z][a-zA-Z]{2}/).required(),
+  email: joi.string().email().required(),
+  password: joi.string().pattern(/^[A-Z][a-zA-Z0-9]{5,}[$&^!@#()|,;:<>?/%-+][0-9]{3,}/).required()
 });
 /**
  * 
@@ -34,10 +34,10 @@ const registationSchema = joi.object({
  * @description Creating token for validation. 
  */
 const createToken = (result) => {
-  console.log(result);
-    const token = jwt.sign({ email: result.data.email, id : result.data._id } , process.env.JWT, { expiresIn: '1 day' });
-    // console.log(token);
-    return token;
+  // console.log(result);
+  const token = jwt.sign({ email: result.data.email, id: result.data._id }, process.env.JWT, { expiresIn: '1 day' });
+  // console.log(token);
+  return token;
 }
 
 /**
@@ -47,13 +47,13 @@ const createToken = (result) => {
 
 const mail = (data) => {
   const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.USER,
-        pass: process.env.PASS,
-      },
-    });
-    
+    service: 'gmail',
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASS,
+    },
+  });
+
   ejs.renderFile('app/mail/mail.ejs', (error, info) => {
     if (error) {
       console.log('error', error);
@@ -65,8 +65,8 @@ const mail = (data) => {
         html: `${info}<button><a href="${'http://localhost:3000/forgetPassword/'}${createToken(data)}">Reset Password</a>
         </button>`,
       };
-    transporter.sendMail(mailOption, function(error, info){
-        (error) ? console.log("this is the error from mailer "+ error) : console.log('Password Reset mail sent successfully, please check your mail.' + info.response);
+      transporter.sendMail(mailOption, function (error, info) {
+        (error) ? console.log("this is the error from mailer " + error) : console.log('Password Reset mail sent successfully, please check your mail.' + info.response);
       });
     }
   });
@@ -87,21 +87,21 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-const redisFunction =  (KEY, value)=> {
+const redisFunction = (KEY, value) => {
   client.setex(KEY, 1200, JSON.stringify(value));
 }
 
-const redisMiddleWare = (req,res,next) =>{
-    client.get('note',(err,note) =>{
-        if(err){
-            throw err
-        }else if (note){
-          console.log(note);
-            res.send(JSON.parse(note))
-        }else{
-            next();
-        }
-    })
+const redisMiddleWare = (req, res, next) => {
+  client.get('note', (err, note) => {
+    if (err) {
+      throw err
+    } else if (note) {
+      // console.log(note);
+      res.send(JSON.parse(note))
+    } else {
+      next();
+    }
+  })
 }
 
-module.exports = { registationSchema, createToken, mail, verifyToken,redisFunction,redisMiddleWare };
+module.exports = { registationSchema, createToken, mail, verifyToken, redisFunction, redisMiddleWare };
