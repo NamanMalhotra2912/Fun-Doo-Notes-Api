@@ -2,9 +2,11 @@
  * @description Express.js is a back end web application framework for Node.js which can be used for writing business logic.
  */
 const express = require('express');
-const logger = require('./Logger/logger');
+const logger = require('./logger/logger');
 require('./config/databaseConfig.js');
 require('./config/redisDatabaseConfig.js');
+const swagger = require('swagger-ui-express');
+const swaggerData = require('./swagger.json');
 
 const port = process.env.PORT;
 // const host = process.env.HOST;
@@ -27,6 +29,7 @@ app.get('/', (req, res) => {
 
 // Require Notes routes
 require('./app/routes/user.js')(app);
+app.use('/swagger', swagger.serve, swagger.setup(swaggerData));
 
 // listen for requests
 app.listen(3000, () => {
