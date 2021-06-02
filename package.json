@@ -7,7 +7,11 @@
     "test": "mocha",
     "start": "nodemon server.js",
     "lint": "eslint ./",
-    "debug": "nodemon --inspect server.js"
+    "debug": "nodemon --inspect server.js",
+    "coverage" : "nyc --reporter=text npm run test"
+  },"nyc" :{
+    "include" : "test",
+    "exclude" : "app"
   },
   "author": "Neeraj_Malhotra",
   "license": "ISC",
@@ -26,6 +30,7 @@
     "mocha": "^8.4.0",
     "mongoose": "^5.12.7",
     "nodemailer": "^6.6.0",
+    "nyc": "^15.1.0",
     "redis": "^3.1.2",
     "swagger-ui-express": "^4.1.6",
     "winston": "^3.3.3"
