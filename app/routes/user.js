@@ -9,28 +9,37 @@
  * @version         : 1.0.0
  * 
  **************************************************************************/
-    const user = require('../controllers/user.js');
-    const note = require('../controllers/note.js');
-    const { verifyToken, redisMiddleWare } = require('../../helper/validationSchema.js');
-    /** 
-     * @description Creating the routes. 
-     */ 
-    module.exports = (app) => {
-        
-        app.post('/register', user.createUser);
+const user = require('../controllers/user.js');
+const note = require('../controllers/note.js');
+const LabelController = require('../controllers/label.js');
+const { verifyToken, redisMiddleWare } = require('../../helper/validationSchema.js');
+/** 
+ * @description Creating the routes.
+ */
+module.exports = (app) => {
 
-        app.post('/login', user.createLogin);
+    app.post('/register', user.createUser);
 
-        app.post('/forgetPassword', user.forgetPassword);
+    app.post('/login', user.createLogin);
 
-        app.post('/resetPassword', user.resetPassword);
+    app.post('/forgetPassword', user.forgetPassword);
 
-        app.post('/notes', verifyToken, note.createNote);
+    app.post('/resetPassword', user.resetPassword);
 
-        app.put('/notes/:noteId', verifyToken, note.updateNote);
+    app.post('/notes', verifyToken, note.createNote);
 
-        app.get('/notes',verifyToken,redisMiddleWare, note.retrieveNote);
+    app.put('/notes/:noteId', verifyToken, note.updateNote);
 
-        app.delete('/notes/:noteId', verifyToken, note.deleteNote);
+    app.get('/notes', verifyToken, redisMiddleWare, note.retrieveNote);
 
-    }
+    app.delete('/notes/:noteId', verifyToken, note.deleteNote);
+
+    app.post('/label', verifyToken, LabelController.createLabel);
+
+    app.put('/label/:labelId', verifyToken, LabelController.updateLabel);
+
+    app.get('/label', verifyToken, LabelController.retrieveLabels);
+
+    app.delete('/label/:labelId', verifyToken, LabelController.deleteLabel);
+
+}
