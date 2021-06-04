@@ -11,8 +11,7 @@
 **************************************************************************/
 const noteServices = require('../services/note');
 
-class NoteApi 
-{
+class NoteApi {
     /**
      * 
      * @method : createNote is used to create note for user.
@@ -21,21 +20,20 @@ class NoteApi
      *  
      */
     createNote = (req, res) => {
-        try{
-            if((!req.body.title) || (!req.body.description) ){
-            return res.status(400).send({
-                success: false,
-                message: 'Please fill correct and complete details.'
-            });
+        try {
+            if ((!req.body.title) || (!req.body.description)) {
+                return res.status(400).send({
+                    success: false,
+                    message: 'Please fill correct and complete details.'
+                });
             };
             const noteData = {
-                    title: req.body.title,
-                    description: req.body.description,
-                    userId : req.userId
+                title: req.body.title,
+                description: req.body.description,
+                userId: req.userId
             }
-            
             noteServices.createNote(noteData, (err, data) => {
-                if(err){
+                if (err) {
                     return res.status(401).send({
                         success: false,
                         message: 'Un-able to create your note, please check it again.',
@@ -44,16 +42,16 @@ class NoteApi
                 } else {
                     return res.status(200).send({
                         success: true,
-                        message: 'Your note created successfully',                
+                        message: 'Your note created successfully',
                         data
                     });
                 }
-                });
+            });
         }
-        catch(error){
+        catch (error) {
             res.status(500).send({
-                success : false,
-                message : "There is some internal error from server"
+                success: false,
+                message: "There is some internal error from server"
             })
         }
     }
@@ -65,8 +63,8 @@ class NoteApi
      *  
      */
     updateNote = (req, res) => {
-        try{
-            if((!req.body.title) || (!req.body.description)){
+        try {
+            if ((!req.body.title) || (!req.body.description)) {
                 return res.status(400).send({
                     success: false,
                     message: 'Please fill correct and complete details.'
@@ -80,7 +78,7 @@ class NoteApi
             }
 
             noteServices.updateNote(noteData, (err, noteResult) => {
-                if(noteResult === null) {
+                if (noteResult === null) {
                     return res.status(400).send({
                         success: false,
                         message: 'Please check your Id again' + res.params.noteId,
@@ -95,10 +93,10 @@ class NoteApi
                 }
             });
         }
-        catch(error){
+        catch (error) {
             res.status(500).send({
-                success : false,
-                message : "There is some internal error from server."
+                success: false,
+                message: "There is some internal error from server."
             })
         }
     };
@@ -110,26 +108,26 @@ class NoteApi
      *  
      */
     retrieveNote = (req, res) => {
-        try{
+        try {
             noteServices.retrieveNote((err, noteResult) => {
-            if(err) {
-                return res.status(400).send({
-                    success: false,
-                    message: 'Un-able to retrive notes'
-                });
-            } else {
-                return res.status(200).send({
-                    success: true,
-                    message: 'Your notes retrived successfully',
-                    data: noteResult
-                });
-            }
+                if (err) {
+                    return res.status(400).send({
+                        success: false,
+                        message: 'Un-able to retrive notes'
+                    });
+                } else {
+                    return res.status(200).send({
+                        success: true,
+                        message: 'Your notes retrived successfully',
+                        data: noteResult
+                    });
+                }
             });
         }
-        catch(error){
+        catch (error) {
             res.status(500).send({
-                success : false,
-                message : "There is some internal error from server"
+                success: false,
+                message: "There is some internal error from server"
             })
         }
     };
@@ -141,28 +139,28 @@ class NoteApi
      *  
      */
     deleteNote = (req, res) => {
-        try{
+        try {
             const nId = req.params.noteId;
             noteServices.deleteNote(nId, (err, noteResult) => {
-                if(noteResult === null){
+                if (noteResult === null) {
                     return res.status(404).send({
                         success: false,
                         message: 'No note found with an Id - ' + nId + ' please check it again.',
                     });
-                }else {
+                } else {
                     return res.status(200).send({
-                    success: true,
-                    message: 'Your note  is deleted successfully'
+                        success: true,
+                        message: 'Your note  is deleted successfully'
                     });
                 }
             });
         }
-        catch(error){
+        catch (error) {
             res.status(500).send({
-                success : false,
-                message : "There is some internal error from server"
+                success: false,
+                message: "There is some internal error from server"
             })
-        }  
+        }
     };
 }
 module.exports = new NoteApi();
