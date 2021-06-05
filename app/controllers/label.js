@@ -23,6 +23,7 @@ class LabelController {
                 userId: req.userId,
             };
             const labelData = await services.createLabel(labelDetails);
+            console.log(labelData);
             if (labelData !== null) {
                 return res.status(200).send({
                     success: true,
@@ -32,7 +33,7 @@ class LabelController {
             }
             return res.status(400).send({
                 success: false,
-                message: 'Un-able to create your label',
+                message: 'Unable to create your label',
                 err,
             });
         } catch (err) {
@@ -122,7 +123,7 @@ class LabelController {
             }).catch((err) => {
                 res.status(400).send({
                     success: false,
-                    message: 'Un-able to delete your label',
+                    message: 'Unable to delete your label',
                     err,
                 });
             });
