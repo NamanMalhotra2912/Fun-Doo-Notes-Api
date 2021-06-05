@@ -162,5 +162,38 @@ class NoteApi {
             })
         }
     };
+    /**
+     * 
+     * @param {httpRequest} req 
+     * @param {http Response} res 
+     * @description :  addLabelToNote is used to add the label to the note.
+     */
+    addLabelToNote = (req, res) => {
+        try {
+            const data = {
+                labelId: req.body.labelId,
+                noteId: req.body.noteId,
+                userId: req.userId,
+            };
+            noteServices.addLabelToNote(data, (err) => {
+                if (err) {
+                    return res.status(400).send({
+                        success: false,
+                        message: 'Unable to add your label into note',
+                        err,
+                    });
+                }
+                return res.status(200).send({
+                    success: true,
+                    message: 'Your label is added to the note successfully'
+                });
+            });
+        } catch (err) {
+            res.status(500).send({
+                success: false,
+                message: 'There is some internal error from server'
+            });
+        }
+    }
 }
 module.exports = new NoteApi();
