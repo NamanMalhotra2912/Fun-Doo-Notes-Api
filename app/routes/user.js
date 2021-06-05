@@ -42,4 +42,6 @@ module.exports = (app) => {
 
     app.delete('/label/:labelId', verifyToken, LabelController.deleteLabel);
 
+    app.post('/addLabelToNote', verifyToken, note.addLabelToNote);
+
 }
