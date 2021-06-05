@@ -91,6 +91,14 @@ class NoteModel {
     });
   };
 
+  addLabelToNote = async (data, callback) => {
+    const label = await noteModel.findOne({ labelId: data.labelId });
+    if (label) {
+      callback('Label already present on the note');
+    } else {
+      callback(null, result);
+    };
+  };
 }
 
 module.exports = new NoteModel();
