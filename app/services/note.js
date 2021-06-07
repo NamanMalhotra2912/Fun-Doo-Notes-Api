@@ -7,7 +7,6 @@
  * @author          : Neeraj Malhotra
  * @version         : 1.0
  ************************************************************************* */
-const note = require('../models/note');
 const notemodel = require('../models/note');
 const { redisFunction } = require('../../helper/validationSchema.js');
 /**
@@ -39,6 +38,10 @@ class NoteService {
     addLabelToNote = (data, callback) => {
         notemodel.addLabelToNote(data, callback);
     };
+
+    removeLabelFromNote = (data, callback) => {
+        notemodel.removeLabelFromNote(data, callback);
+    }
 }
 
 module.exports = new NoteService();
