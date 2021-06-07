@@ -44,4 +44,6 @@ module.exports = (app) => {
 
     app.post('/addLabelToNote', verifyToken, note.addLabelToNote);
 
+    app.delete('/removeLabelFromNote', verifyToken, note.removeLabelFromNote);
+
 }
