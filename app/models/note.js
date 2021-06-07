@@ -41,6 +41,9 @@ const noteSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId, ref: 'User'
   },
+  labelId: [{
+    type: mongoose.Schema.Types.ObjectId, ref: 'Label'
+  }],
 }, {
   timestamps: true,
   versionKey: false,
@@ -48,7 +51,7 @@ const noteSchema = mongoose.Schema({
 
 const noteModel = mongoose.model('Note', noteSchema);
 /**
- * @description created NoteModel class for note api.
+ * @description created NoteModel class for note api
  */
 class NoteModel {
   createNote = (noteInfo, callback) => {
@@ -94,11 +97,23 @@ class NoteModel {
   addLabelToNote = async (data, callback) => {
     const label = await noteModel.findOne({ labelId: data.labelId });
     if (label) {
-      callback('Label already present on the note');
+      callback('Please check your label again for duplicasy');
     } else {
+      const result = await noteModel.findByIdAndUpdate(data.noteId, {
+        $push: {
+          labelId: data.labelId
+        }
+      });
       callback(null, result);
     };
   };
-}
 
+  removeLabelFromNote = (data, callback) => {
+    noteModel.findByIdAndUpdate(data.noteId, {
+      $pull: { labelId: data.labelId }
+    }),
+      callback;
+  };
+
+}
 module.exports = new NoteModel();
