@@ -140,12 +140,12 @@ class NoteApi {
      */
     deleteNote = (req, res) => {
         try {
-            const nId = req.params.noteId;
-            noteServices.deleteNote(nId, (err, noteResult) => {
+            const noteId = req.params.noteId;
+            noteServices.deleteNote(noteId, (err, noteResult) => {
                 if (noteResult === null) {
                     return res.status(404).send({
                         success: false,
-                        message: 'No note found with an Id - ' + nId + ' please check it again.',
+                        message: 'No note found with an Id - ' + noteId + ' please check it again.',
                     });
                 } else {
                     return res.status(200).send({
@@ -175,7 +175,7 @@ class NoteApi {
                 noteId: req.body.noteId,
                 userId: req.userId,
             };
-            noteServices.addLabelToNote(data, (err) => {
+            noteServices.addLabelToNote(data, (err, data) => {
                 if (err) {
                     return res.status(400).send({
                         success: false,
@@ -185,13 +185,48 @@ class NoteApi {
                 }
                 return res.status(200).send({
                     success: true,
-                    message: 'Your label is added to the note successfully'
+                    message: 'Your label is added to the note successfully',
+                    data
                 });
             });
         } catch (err) {
             res.status(500).send({
                 success: false,
                 message: 'There is some internal error from server'
+            });
+        }
+    }
+    /**
+     * 
+     * @param {httpRequest} req 
+     * @param {http Response} res 
+     * @description :  removeLabelFromNote is used to remove the label from the note.
+     */
+    removeLabelFromNote = (req, res) => {
+        try {
+            const data = {
+                labelId: req.body.labelId,
+                noteId: req.body.noteId,
+                userId: req.userId,
+            };
+            noteServices.addLabelToNote(data, (err, data) => {
+                if (err) {
+                    return res.status(400).send({
+                        success: false,
+                        message: 'Unable to remove your note',
+                        // err,
+                    });
+                }
+                return res.status(200).send({
+                    success: true,
+                    message: 'Your Label is removed from note',
+                    data: data
+                });
+            });
+        } catch (err) {
+            res.status(500).send({
+                success: false,
+                message: 'There is some internal error from server',
             });
         }
     }
