@@ -41,7 +41,7 @@ class NoteService {
 
     removeLabelFromNote = (data) => {
         return new Promise((resolve, reject) => {
-            const result = models.removeLabelFromNote(data);
+            const result = notemodel.removeLabelFromNote(data);
             result.then((labelData) => resolve({ labelData }))
                 .catch((err) => reject({ err }));
         });
