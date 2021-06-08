@@ -25,62 +25,55 @@ const userSchema = mongoose.Schema({
         type: String
     },
     email: {
-        type : String,
+        type: String,
         required: true,
         unique: true
     },
-    password:{
+    password: {
         type: String
     },
 }, {
-    versionKey : false
+    versionKey: false
 },
-{
-    timestamps: true
-});
+    {
+        timestamps: true
+    });
 userSchema.pre('save', async function (next) {
     try {
-       const salt = await bcrypt.genSalt(10)
-       const hashedPassword = await bcrypt.hash(this.password , salt)
-       this.password = hashedPassword
-       next() 
-    } catch (error)
-     {
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(this.password, salt)
+        this.password = hashedPassword
+        next()
+    } catch (error) {
         next(error)
-     }
-    
+    }
+
 });
 
-const userModel = mongoose.model('User' ,userSchema);
+const userModel = mongoose.model('User', userSchema);
 
 class userRegistrationModel {
-    createUser = (userData ,callback) => {
+    createUser = (userData, callback) => {
         const user = new userModel(userData);
-        user.save((err, userResult)=> {
-            (err) ? callback(err ,null) : callback(null ,userResult);
+        user.save((err, userResult) => {
+            (err) ? callback(err, null) : callback(null, userResult);
         });
     };
 
     createLogin = async (loginData, callback) => {
-        const check = await userModel.findOne({email: loginData.email})
-        // console.log(check);
-        // if(check){
-        //     callback(null,check);
-        // }else{
-        //     callback("login failed");
-        // }
-        check ? callback(null,check) : callback("login failed");
+        const check = await userModel.findOne({ email: loginData.email })
+        check ? callback(null, check) : callback("login failed");
     };
 
-    forgetPassword = (data,callback) => {
-        userModel.findOne({email: data.email} , callback)
+    forgetPassword = (data, callback) => {
+        userModel.findOne({ email: data.email }, callback)
     }
 
     resetPassword = async (data, callback) => {
         console.log(data.email);
         const salt = await bcrypt.genSalt(10);
         const encrypt = await bcrypt.hash(data.password, salt);
-        userRegistrationModel.findOneAndUpdate({email: data.email }, { password: encrypt } ,{new: true} ,callback(null,data))
+        userRegistrationModel.findOneAndUpdate({ email: data.email }, { password: encrypt }, { new: true }, callback(null, data))
     }
 }
 
