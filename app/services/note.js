@@ -39,9 +39,14 @@ class NoteService {
         notemodel.addLabelToNote(data, callback);
     };
 
-    removeLabelFromNote = (data, callback) => {
-        notemodel.removeLabelFromNote(data, callback);
+    removeLabelFromNote = (data) => {
+        return new Promise((resolve, reject) => {
+            const result = models.removeLabelFromNote(data);
+            result.then((labelData) => resolve({ labelData }))
+                .catch((err) => reject({ err }));
+        });
     }
+
 }
 
 module.exports = new NoteService();
