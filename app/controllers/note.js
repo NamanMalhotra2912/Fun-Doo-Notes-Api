@@ -209,18 +209,16 @@ class NoteApi {
                 noteId: req.body.noteId,
                 userId: req.userId,
             };
-            noteServices.addLabelToNote(data, (err, data) => {
-                if (err) {
-                    return res.status(400).send({
-                        success: false,
-                        message: 'Unable to remove your note',
-                        // err,
-                    });
-                }
-                return res.status(200).send({
+            noteServices.removeLabelFromNote(data).then(() => {
+                res.status(200).send({
                     success: true,
                     message: 'Your Label is removed from note',
-                    data: data
+                });
+            }).catch((err) => {
+                res.status(400).send({
+                    success: false,
+                    message: 'Unable to remove your note',
+                    err,
                 });
             });
         } catch (err) {
