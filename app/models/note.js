@@ -76,36 +76,23 @@ class NoteModel {
 
   retrieveNote = (callback) => {
     noteModel.find((err, notedata) => {
-      if (err) {
-        callback(err, null);
-      } else {
-        callback(null, notedata);
-      }
+      (err) ? callback(err, null) : callback(null, notedata);
     });
   };
 
   deleteNote = (noteIds, callback) => {
     noteModel.findByIdAndRemove(noteIds, (err, noteresult) => {
-      if (err) {
-        callback(err, null);
-      } else {
-        callback(null, noteresult);
-      }
+      (err) ? callback(err, null) : callback(null, noteresult);
     });
   };
 
   addLabelToNote = async (data, callback) => {
-    const label = await noteModel.findOne({ labelId: data.labelId });
-    if (label) {
-      callback('Please check your label again for duplicasy');
-    } else {
-      const result = await noteModel.findByIdAndUpdate(data.noteId, {
-        $push: {
-          labelId: data.labelId
-        }
-      });
-      callback(null, result);
-    };
+    const result = await noteModel.findByIdAndUpdate(data.noteId, {
+      $push: {
+        labelId: data.labelId
+      }
+    });
+    callback(null, result);
   };
 
   removeLabelFromNote = (data) => {
