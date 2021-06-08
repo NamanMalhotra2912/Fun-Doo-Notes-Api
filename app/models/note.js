@@ -108,12 +108,20 @@ class NoteModel {
     };
   };
 
-  removeLabelFromNote = (data, callback) => {
-    noteModel.findByIdAndUpdate(data.noteId, {
-      $pull: { labelId: data.labelId }
-    }),
-      callback;
-  };
+  removeLabelFromNote = (data) => {
+    return new Promise((resolve, reject) => {
+      noteModel.findByIdAndUpdate(data.noteId,
+        {
+          $pull: {
+            labelId: data.labelId
+          }
+        })
+        .then((label) =>
+          resolve(label))
+        .catch((err) =>
+          reject(err));
+    });
+  }
 
 }
 module.exports = new NoteModel();
