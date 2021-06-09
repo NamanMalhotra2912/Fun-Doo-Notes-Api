@@ -54,6 +54,11 @@ const noteModel = mongoose.model('Note', noteSchema);
  * @description created NoteModel class for note api
  */
 class NoteModel {
+  /**
+   * 
+   * @param {*} noteInfo : here we will save our data.
+   * @description : createNote is used to create and save the note data.
+   */
   createNote = (noteInfo, callback) => {
     const note = new noteModel({
       title: noteInfo.title,
@@ -62,7 +67,11 @@ class NoteModel {
     });
     note.save(callback);
   };
-
+  /**
+   * 
+   * @param {*} notesID : here we will use the id to update the note.
+   * @description : updateNote is used to update the note.
+   */
   updateNote = (notesID, callback) => {
     noteModel.findByIdAndUpdate(notesID.noteId, {
       title: notesID.title,
@@ -73,19 +82,31 @@ class NoteModel {
       callback(err, null);
     });
   };
-
+  /**
+   * 
+   * @param {*} callback
+   * @description : here retrieveNote is used to retrieve all the notes created.
+   */
   retrieveNote = (callback) => {
     noteModel.find((err, notedata) => {
       (err) ? callback(err, null) : callback(null, notedata);
     });
   };
-
+  /**
+   * 
+   * @description : deleteNote is used to delete the particular note with its id.
+   */
   deleteNote = (noteIds, callback) => {
     noteModel.findByIdAndRemove(noteIds, (err, noteresult) => {
       (err) ? callback(err, null) : callback(null, noteresult);
     });
   };
-
+  /**
+   * 
+   * @param {*} data 
+   * @returns {*} callback 
+   * @description : addLabelToNote will add the label to note in array.
+   */
   addLabelToNote = async (data, callback) => {
     const result = await noteModel.findByIdAndUpdate(data.noteId, {
       $push: {
@@ -94,7 +115,11 @@ class NoteModel {
     });
     callback(null, result);
   };
-
+  /**
+   * 
+   * @param {*} data 
+   * @description : removeLabelFromNote will remove the label from the note.
+   */
   removeLabelFromNote = (data) => {
     return new Promise((resolve, reject) => {
       noteModel.findByIdAndUpdate(data.noteId,
