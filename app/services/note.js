@@ -11,34 +11,61 @@ const notemodel = require('../models/note');
 const { redisFunction } = require('../../helper/validationSchema.js');
 /**
 * @class NoteService to include all notes api.
-* @description create service file to apply business logic for api.
+* @description this will work as middleware between model and controller.
 */
 class NoteService {
+    /**
+     * 
+     * @param {*} noteInfo will take data for the note
+     * @description : createNote is used to take data from controller then pass it to models
+     */
     createNote = (noteInfo, callback) => {
         notemodel.createNote(noteInfo, callback);
     };
-
+    /**
+     * 
+     * @param {*} noteInfo will take data for the note to update it.
+     * @description : updateNote is used to take data from controller 
+     *                  then pass it to models for updating the note
+     */
     updateNote = (noteData, callback) => {
         const KEY = 'note';
         notemodel.updateNote(noteData, (err, result) => {
             err ? callback(err, null) : redisFunction(KEY, result), callback(null, result);
         });
     };
-
+    /**
+     * 
+     * @description : retrieveNote is used to retrieve data for all the notes created
+     */
     retrieveNote = (callback) => {
         notemodel.retrieveNote((err, result) => {
             err ? callback(err, null) : callback(null, result);
         });
     }
-
+    /**
+     * 
+     * @param {*} noteIds will take the id for the note you wants to delete
+     * @description : deleteNote is used to delete the note which is created earlier.
+     */
     deleteNote = (noteIds, callback) => {
         notemodel.deleteNote(noteIds, callback);
     };
-
+    /**
+     * 
+     * @param {*} data : data comes from the body.
+     * @description : addLabelToNote is used to add labels into existing note,
+     *               its taking data from controller and passing it to models
+     */
     addLabelToNote = (data, callback) => {
         notemodel.addLabelToNote(data, callback);
     };
-
+    /**
+     * 
+     * @param {*} data : data comes from the body.
+     * @description : removeLabelFromNote is used to remove the labels from the existing note,
+     *               its taking data from controller and passing it to models
+     */
     removeLabelFromNote = (data) => {
         return new Promise((resolve, reject) => {
             const result = notemodel.removeLabelFromNote(data);
