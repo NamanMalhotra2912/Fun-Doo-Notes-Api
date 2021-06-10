@@ -228,5 +228,65 @@ class NoteApi {
             });
         }
     }
+    /**
+    * @description Add User With Note
+    * @param {*} request in json formate
+    * @param {*} response sends response from server
+    */
+    addCollaborator = (req, res) => {
+        try {
+            const data = {
+                collaborator: req.body.collaborator,
+                noteId: req.body.noteId,
+                userId: req.body.userId,
+            }
+            noteServices.addCollaborator(data, (err, data) => {
+                if (err) {
+                    return res.status(400).send({
+                        success: false,
+                        message: 'Unable To Collaborate your note',
+                        err,
+                    });
+                } else {
+                    return res.status(200).send({
+                        success: true,
+                        message: 'Collaborate your note successfully',
+                        data,
+                    });
+                }
+            });
+        } catch (err) {
+            res.status(500).send({
+                success: false,
+                message: 'There is some internal error from server'
+            });
+        }
+    };
+    removeCollaborator = (req, res) => {
+        try {
+            const data = {
+                collaborator: req.body.collaborator,
+                noteId: req.body.noteId,
+                userId: req.userId,
+            };
+            noteServices.removeLabelFromNote(data).then(() => {
+                res.status(200).send({
+                    success: true,
+                    message: 'Your collaborator is removed from note',
+                });
+            }).catch((err) => {
+                res.status(400).send({
+                    success: false,
+                    message: 'Unable to remove your collaborator',
+                    err,
+                });
+            });
+        } catch (err) {
+            res.status(500).send({
+                success: false,
+                message: 'There is some internal error from server',
+            });
+        }
+    }
 }
 module.exports = new NoteApi();
