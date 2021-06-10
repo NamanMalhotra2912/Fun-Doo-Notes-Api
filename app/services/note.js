@@ -73,7 +73,29 @@ class NoteService {
                 .catch((err) => reject({ err }));
         });
     }
-
+    /**
+     * 
+     * @param {*} data 
+     * @param {*} callback 
+     * @description : addCollaborator will add the collaborator by taking data from controller
+     *                   and passing it to models
+     */
+    addCollaborator = (data, callback) => {
+        notemodel.addCollaborator(data, callback);
+    };
+    /**
+    * 
+    * @param {*} data : data comes from the body.
+    * @description : removeCollaborator is used to remove the Collaborator from the existing note,
+    *               its taking data from controller and passing it to models
+    */
+    removeCollaborator = (data) => {
+        return new Promise((resolve, reject) => {
+            const result = notemodel.removeCollaborator(data);
+            result.then((labelData) => resolve({ labelData }))
+                .catch((err) => reject({ err }));
+        });
+    }
 }
 
 module.exports = new NoteService();
