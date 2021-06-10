@@ -46,4 +46,8 @@ module.exports = (app) => {
 
     app.delete('/removeLabelFromNote', verifyToken, note.removeLabelFromNote);
 
+    app.post('/addCollaborator', verifyToken, note.addCollaborator);
+
+    app.delete('/removeCollaborator', verifyToken, note.removeCollaborator);
+
 }
