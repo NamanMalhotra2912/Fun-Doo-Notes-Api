@@ -44,6 +44,9 @@ const noteSchema = mongoose.Schema({
   labelId: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'Label'
   }],
+  collaborator: [{
+    type: mongoose.Schema.Types.ObjectId, ref: 'User'
+  }],
 }, {
   timestamps: true,
   versionKey: false,
@@ -130,6 +133,39 @@ class NoteModel {
         })
         .then((label) =>
           resolve(label))
+        .catch((err) =>
+          reject(err));
+    });
+  }
+  /**
+   * 
+   * @param {*} data 
+   * @param {*} callback 
+   * @description : addCollaborator will add the collaborator into note
+   */
+  addCollaborator = async (data, callback) => {
+    const result = await noteModel.findByIdAndUpdate(data.noteId, {
+      $push: {
+        collaborator: data.collaborator
+      }
+    });
+    callback(null, result);
+  };
+  /**
+  * 
+  * @param {*} data 
+  * @description : removeLabelFromNote will remove the label from the note.
+  */
+  removeLabelFromNote = (data) => {
+    return new Promise((resolve, reject) => {
+      noteModel.findByIdAndUpdate(data.noteId,
+        {
+          $pull: {
+            collaborator: data.collaborator
+          }
+        })
+        .then((collaborator) =>
+          resolve(collaborator))
         .catch((err) =>
           reject(err));
     });
