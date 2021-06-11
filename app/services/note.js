@@ -9,6 +9,8 @@
  ************************************************************************* */
 const notemodel = require('../models/note');
 const { redisFunction } = require('../../helper/validationSchema.js');
+// const help = require('../../helper/validationSchema.js');
+const help = require('../../helper/collaboratorHelper.js');
 /**
 * @class NoteService to include all notes api.
 * @description this will work as middleware between model and controller.
@@ -78,10 +80,17 @@ class NoteService {
      * @param {*} data 
      * @param {*} callback 
      * @description : addCollaborator will add the collaborator by taking data from controller
-     *                   and passing it to models
+     *                and passing it to models and then it will send the mail for adding it as well.
      */
     addCollaborator = (data, callback) => {
-        notemodel.addCollaborator(data, callback);
+        notemodel.addCollaborator(data, (err, result) => {
+            if (result) {
+                (err) ? callback(err, null) : callback(null, help.mail(data));
+            }
+            else {
+                callback('Please check your email id again.');
+            }
+        });
     };
     /**
     * 
