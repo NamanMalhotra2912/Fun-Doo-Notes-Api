@@ -147,7 +147,7 @@ class NoteModel {
     const result = await noteModel.findByIdAndUpdate(data.noteId, {
       $push: {
         collaborator: data.collaborator
-      }
+      },
     });
     callback(null, result);
   };
