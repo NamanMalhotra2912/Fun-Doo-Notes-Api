@@ -229,16 +229,17 @@ class NoteApi {
         }
     }
     /**
-    * @description Add User With Note
-    * @param {*} request in json formate
-    * @param {*} response sends response from server
-    */
+     * 
+     * @param {*} req 
+     * @param {*} res 
+     * @description : addCollaborator will add the Collaborator in the note
+     */
     addCollaborator = (req, res) => {
         try {
             const data = {
                 collaborator: req.body.collaborator,
                 noteId: req.body.noteId,
-                userId: req.body.userId,
+                userId: req.userId,
             }
             noteServices.addCollaborator(data, (err, data) => {
                 if (err) {
@@ -262,6 +263,12 @@ class NoteApi {
             });
         }
     };
+    /**
+     * 
+     * @param {*} req 
+     * @param {*} res 
+     * @description : removeCollaborator is used to remove Collaborator from note.
+     */
     removeCollaborator = (req, res) => {
         try {
             const data = {
