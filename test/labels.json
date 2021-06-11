@@ -1,7 +1,7 @@
 {
     "labels": {
         "genratedToken": {
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZtYWxob3RyYUBnbWFpbC5jb20iLCJpZCI6IjYwYjc5NTM3NTUxM2Q2MzE3ODM4ODc3YiIsImlhdCI6MTYyMzIxMDAxMCwiZXhwIjoxNjIzMjk2NDEwfQ.ugcNVkm2rJbGpynMKKZXdk8ZakL2R-dRj10RxIcgvxU",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhamt1bWFyQGdtYWlsLmNvbSIsImlkIjoiNjBjMmQzY2MzYzE2YjkwMjk4ZWU5YjNiIiwiaWF0IjoxNjIzMzgwOTY2LCJleHAiOjE2MjM0NjczNjZ9.TFF4PrDFlhuinR0XSBjZrk0IxYPHW-zXiBKByRbjbqc",
             "wrongToken": "eyJhNiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZtYWxBnbWFpbC5jb2jYwYjc5NTM3NTUxM2Q2MzE3ODM4ODc3YiIsImlhdCI6MTYyMzIxMDAxMCwiZXhwIjoxNjIzMjk2NDEwfQ.ugcNVkm2rJdRj10RxIcgvxU"
         },
         "createLabel": {
@@ -9,6 +9,10 @@
         },
         "updateLabel": {
             "label": "Here I'm updating my label"
+        },
+        "addLabelWithProperDetails": {
+            "labelId": "60c2cb2932aa660f54806250",
+            "noteId": "60bef3445bf3aa1bd0c03ce6"
         }
     }
 }
