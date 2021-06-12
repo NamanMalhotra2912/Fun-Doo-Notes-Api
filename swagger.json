@@ -376,6 +376,130 @@
                 }
             }
 
+        },"/addLabelToNote": {
+            "post": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Add label into Note in FundooNotes",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "addLabelToNote"
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "an authorization token",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "addLabelToNote successfully"
+                    },
+                    "400": {
+                        "description": "failed to addLabelToNote"
+                    }
+                }
+            }
+        },"/removeLabelFromNote": {
+            "delete": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Remove label from Note in FundooNotes",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "removeLabelFromNote"
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "an authorization token",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Removed Label From Note successfully"
+                    },
+                    "400": {
+                        "description": "Failed to remove Label From Note"
+                    }
+                }
+            }
+        },"/addCollaborator": {
+            "post": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Add Collaborator in FundooNotes",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "addCollaborator"
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "an authorization token",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collaborator aded successfully"
+                    },
+                    "400": {
+                        "description": "Failed to add collaborator"
+                    }
+                }
+            }
+        },"/removeCollaborator": {
+            "delete": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Remove Collaborator in FundooNotes",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "removeCollaborator"
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "an authorization token",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collaborator removed successfully"
+                    },
+                    "400": {
+                        "description": "Failed to remove collaborator"
+                    }
+                }
+            }
         }
     }
 }
