@@ -237,10 +237,12 @@ class NoteApi {
     addCollaborator = (req, res) => {
         try {
             const data = {
-                collaborator: req.body.collaborator,
+                collaboratingUserId: req.body.collaboratingUserId,
                 noteId: req.body.noteId,
                 userId: req.userId,
             }
+            console.log("this is user id which is comming from verifyToken : ", data.userId);
+            console.log(" Collaborator details :", data.collaboratingUserId);
             noteServices.addCollaborator(data, (err, data) => {
                 if (err) {
                     return res.status(400).send({
@@ -251,7 +253,7 @@ class NoteApi {
                 } else {
                     return res.status(200).send({
                         success: true,
-                        message: 'Collaborate your note successfully',
+                        message: 'Collaborate your note successfully.',
                         data,
                     });
                 }
@@ -272,11 +274,11 @@ class NoteApi {
     removeCollaborator = (req, res) => {
         try {
             const data = {
-                collaborator: req.body.collaborator,
+                collaboratingUserId: req.body.collaboratingUserId,
                 noteId: req.body.noteId,
                 userId: req.userId,
             };
-            noteServices.removeLabelFromNote(data).then(() => {
+            noteServices.removeCollaborator(data).then(() => {
                 res.status(200).send({
                     success: true,
                     message: 'Your collaborator is removed from note',
