@@ -9,7 +9,6 @@
  ************************************************************************* */
 const notemodel = require('../models/note');
 const { redisFunction } = require('../../helper/validationSchema.js');
-// const help = require('../../helper/validationSchema.js');
 const help = require('../../helper/collaboratorHelper.js');
 /**
 * @class NoteService to include all notes api.
@@ -101,7 +100,7 @@ class NoteService {
     removeCollaborator = (data) => {
         return new Promise((resolve, reject) => {
             const result = notemodel.removeCollaborator(data);
-            result.then((labelData) => resolve({ labelData }))
+            result.then((data) => resolve({ data }))
                 .catch((err) => reject({ err }));
         });
     }
