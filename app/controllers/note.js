@@ -237,17 +237,15 @@ class NoteApi {
     addCollaborator = (req, res) => {
         try {
             const data = {
-                collaboratingUserId: req.body.collaboratingUserId,
+                collaboratorId: req.body.collaboratorId,
                 noteId: req.body.noteId,
                 userId: req.userId,
             }
-            console.log("this is user id which is comming from verifyToken : ", data.userId);
-            console.log(" Collaborator details :", data.collaboratingUserId);
             noteServices.addCollaborator(data, (err, data) => {
                 if (err) {
                     return res.status(400).send({
                         success: false,
-                        message: 'Unable To Collaborate your note',
+                        message: 'Failed To Collaborate your note',
                         err,
                     });
                 } else {
@@ -274,7 +272,7 @@ class NoteApi {
     removeCollaborator = (req, res) => {
         try {
             const data = {
-                collaboratingUserId: req.body.collaboratingUserId,
+                collaboratorId: req.body.collaboratorId,
                 noteId: req.body.noteId,
                 userId: req.userId,
             };
@@ -286,7 +284,7 @@ class NoteApi {
             }).catch((err) => {
                 res.status(400).send({
                     success: false,
-                    message: 'Unable to remove your collaborator',
+                    message: 'Failed to remove your collaborator',
                     err,
                 });
             });
