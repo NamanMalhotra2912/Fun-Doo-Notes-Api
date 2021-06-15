@@ -87,7 +87,7 @@ class NoteService {
                 (err) ? callback(err, null) : callback(null, help.mail(data));
             }
             else {
-                callback('Please check your email id again.');
+                callback('Please check your details again for duplicasy.');
             }
         });
     };
