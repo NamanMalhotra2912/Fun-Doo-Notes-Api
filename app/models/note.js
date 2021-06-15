@@ -44,7 +44,7 @@ const noteSchema = mongoose.Schema({
   labelId: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'Label'
   }],
-  collaboratingUserId: [{
+  collaboratorId: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'User'
   }],
 }, {
@@ -144,12 +144,17 @@ class NoteModel {
    * @description : addCollaborator will add the collaborator into note
    */
   addCollaborator = async (data, callback) => {
-    const result = await noteModel.findByIdAndUpdate(data.noteId, {
-      $addToSet: {
-        collaboratingUserId: data.collaboratingUserId
-      },
-    });
-    callback(null, result);
+    const collaborator = await noteModel.findOne({ collaboratorId: data.collaboratorId });
+    if (collaborator) {
+      callback('Collaborator is already exist in the note, please check again');
+    } else {
+      const result = await noteModel.findByIdAndUpdate(data.noteId, {
+        $addToSet: {
+          collaboratorId: data.collaboratorId
+        },
+      });
+      callback(null, result);
+    }
   };
   /**
   * 
@@ -161,7 +166,7 @@ class NoteModel {
       noteModel.findByIdAndUpdate(data.noteId,
         {
           $pull: {
-            collaboratingUserId: data.collaboratingUserId
+            collaboratorId: data.collaboratorId
           }
         })
         .then((user) =>
@@ -171,4 +176,5 @@ class NoteModel {
     });
   }
 }
+
 module.exports = new NoteModel();
