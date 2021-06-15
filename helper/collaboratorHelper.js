@@ -21,7 +21,7 @@ const mail = () => {
                 html: `${info}`,
             };
             transporter.sendMail(mailOption, function (error, info) {
-                (error) ? console.log("this is the error from mailer " + error) : console.log('Password Reset mail sent successfully, please check your mail.' + info.response);
+                (error) ? console.log("this is the error from mailer " + error) : console.log('Collaborated your note successfully, please check your email.' + info.response);
             });
         }
     });
