@@ -4,9 +4,9 @@
  */
 const redis = require("redis");
 const client = redis.createClient();
-client.on("error",function(error){
+client.on("error", function (error) {
     console.error("Error encounterd : ".error);
 });
-client.on("Connect",function(error){
+client.on("Connect", function (error) {
     console.log("Redis Connection established");
 });
