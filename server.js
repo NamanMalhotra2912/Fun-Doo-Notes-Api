@@ -9,29 +9,34 @@ const swagger = require('swagger-ui-express');
 const swaggerData = require('./swagger.json');
 
 const port = process.env.PORT;
-// const host = process.env.HOST;
-
-// create express app
+/**
+ * create express app
+ */
 const app = express();
-
-// parse requests of content-type - application/x-www-form-urlencoded
-//use is a way to register middleware or chain of middlewares before executing any end route logic.
+/**
+ * parse requests of content-type - application/x-www-form-urlencoded
+ * use is a way to register middleware or chain of middlewares before executing any end route logic.
+ */
+// 
 app.use(express.json());
-
-// parse requests of content-type - application/json
-// app.use(bodyParser.json())
+/**
+ * parse requests of content-type - application/json
+ */
 app.use(express.json());
-
-// define a simple route
+/**
+ * define a simple route
+ */
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to Fun Doo Notes application. Take notes quickly. Organize and keep track of all your notes."});
+    res.json({ "message": "Welcome to Fun Doo Notes application. Take notes quickly. Organize and keep track of all your notes." });
 });
-
-// Require Notes routes
+/**
+ * Require Notes routes
+ */
 require('./app/routes/user.js')(app);
 app.use('/swagger', swagger.serve, swagger.setup(swaggerData));
-
-// listen for requests
+/**
+ * listen for requests
+ */
 app.listen(3000, () => {
     logger.log("info", "Server is listening on port 3000");
 });
