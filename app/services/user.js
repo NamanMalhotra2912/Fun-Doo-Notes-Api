@@ -17,13 +17,14 @@ const help = require('../../helper/validationSchema.js');
  * 
  * @description Creating service file for all api of register, login, forget password and reset password
  */
-class userData {
+class UserData {
     createUser = (userData, callback) => {
         userRegistrationModel.createUser(userData, callback);
     }
 
-    createLogin = (loginData, callback) => {
-        userRegistrationModel.createLogin(loginData, (_err, result) => {
+    login = (loginData, callback) => {
+        userRegistrationModel.login(loginData, (_err, result) => {
+            // console.log(_err);
             if (result) {
                 bcrypt.compare(loginData.password, result.password, (err, data) => {
                     if (err) {
@@ -51,12 +52,7 @@ class userData {
         // console.log(data);
         userRegistrationModel.forgetPassword(data, (err, result) => {
             if (result) {
-                if (err) {
-                    callback(err, null);
-                }
-                else {
-                    callback(null, help.mail(data));
-                }
+                (err) ? callback(err, null) : callback(null, help.mail(data));
             }
             else {
                 callback('Please check your email id again.');
@@ -69,4 +65,4 @@ class userData {
         userRegistrationModel.resetPassword(data, callback);
     }
 }
-module.exports = new userData();
+module.exports = new UserData();
