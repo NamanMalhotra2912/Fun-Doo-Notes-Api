@@ -73,7 +73,7 @@ class UserRegistrationModel {
         // console.log(data.email);
         const salt = await bcrypt.genSalt(10);
         const encrypt = await bcrypt.hash(data.password, salt);
-        userRegistrationModel.findOneAndUpdate({ email: data.email }, { password: encrypt }, { new: true }, callback(null, data))
+        UserRegistrationModel.findOneAndUpdate({ email: data.email }, { password: encrypt }, { new: true }, callback(null, data));
     }
 }
 
