@@ -52,7 +52,7 @@ userSchema.pre('save', async function (next) {
 
 const userModel = mongoose.model('User', userSchema);
 
-class userRegistrationModel {
+class UserRegistrationModel {
     createUser = (userData, callback) => {
         const user = new userModel(userData);
         user.save((err, userResult) => {
@@ -60,7 +60,7 @@ class userRegistrationModel {
         });
     };
 
-    createLogin = async (loginData, callback) => {
+    login = async (loginData, callback) => {
         const check = await userModel.findOne({ email: loginData.email })
         check ? callback(null, check) : callback("login failed");
     };
@@ -70,11 +70,11 @@ class userRegistrationModel {
     }
 
     resetPassword = async (data, callback) => {
-        console.log(data.email);
+        // console.log(data.email);
         const salt = await bcrypt.genSalt(10);
         const encrypt = await bcrypt.hash(data.password, salt);
         userRegistrationModel.findOneAndUpdate({ email: data.email }, { password: encrypt }, { new: true }, callback(null, data))
     }
 }
 
-module.exports = new userRegistrationModel;
+module.exports = new UserRegistrationModel;
