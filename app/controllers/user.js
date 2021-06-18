@@ -34,7 +34,6 @@ class UserRegistration {
                     message: "Fields can't be empty, please fill all details."
                 })
             }
-
             const checkValidation = registationSchema.validate(userDetails);
             if (checkValidation.error) {
                 res.send({ message: "Please enter correct details for ragistration." });
@@ -59,7 +58,7 @@ class UserRegistration {
         } catch (error) {
             res.status(500).send({
                 success: false,
-                message: "There is some internal error from server"
+                message: "Internal error from server"
             })
         }
     }
@@ -69,18 +68,18 @@ class UserRegistration {
      * @description Creating the login for user 
      * @returns login status.
      */
-    createLogin = (req, res) => {
+    login = (req, res) => {
         try {
             const loginData = {
                 email: req.body.email,
                 password: req.body.password
             };
-            user.createLogin(loginData, (error, result) => {
+            user.login(loginData, (error, result) => {
                 if (error) {
                     res.status(400).send({
                         success: false,
-                        message: "User is not ragistered",
-                        error
+                        message: "Please fill correct details for login",
+                        // error
                     });
                 }
                 else {
@@ -95,7 +94,7 @@ class UserRegistration {
         } catch (error) {
             res.status(500).send({
                 success: false,
-                message: "There is some internal error from server"
+                message: "Internal error from server"
             })
         }
     };
@@ -114,7 +113,7 @@ class UserRegistration {
                 if (error) {
                     res.status(500).send({
                         success: false,
-                        message: "Sorry, please check and share correct details.",
+                        message: "Please check and share correct details.",
                         error
                     });
                 }
@@ -129,7 +128,7 @@ class UserRegistration {
         } catch (error) {
             res.status(500).send({
                 success: false,
-                message: "There is some internal error from server"
+                message: "Internal error from server"
             })
         }
     }

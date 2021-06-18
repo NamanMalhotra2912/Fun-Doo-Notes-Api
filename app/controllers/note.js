@@ -245,8 +245,8 @@ class NoteApi {
                 if (err) {
                     return res.status(400).send({
                         success: false,
-                        message: 'Failed To Collaborate your note',
-                        err,
+                        message: 'Failed To Collaborate your note due to duplicasy',
+                        // err,
                     });
                 } else {
                     return res.status(200).send({
