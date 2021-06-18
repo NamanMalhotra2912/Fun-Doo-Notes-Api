@@ -10,7 +10,7 @@
  * 
 **************************************************************************/
 
-const { registationSchema, createToken } = require('../../helper/validationSchema.js');
+const { registationSchema, createToken, createTokenForUser } = require('../../helper/validationSchema.js');
 const user = require('../services/user.js');
 const jwt = require('jsonwebtoken');
 
@@ -86,7 +86,7 @@ class UserRegistration {
                     res.status(200).send({
                         success: true,
                         message: "You are Logged in Successfully.",
-                        Token: createToken(result),
+                        Token: createTokenForUser(result),
                         // data : result
                     });
                 }
