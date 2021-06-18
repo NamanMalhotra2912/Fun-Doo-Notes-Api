@@ -35,7 +35,9 @@ const registationSchema = joi.object({
  */
 const createToken = (result) => {
   // console.log(result);
-  const token = jwt.sign({ email: result.data.email, id: result.data._id }, process.env.JWT, { expiresIn: '1 day' });
+  // const token = jwt.sign({ email: result.data.email, id: result.data._id }, process.env.JWT, { expiresIn: '1 day' }
+  const token = jwt.sign({ name: result.email }, process.env.JWT, { expiresIn: '1 day' }
+  );
   // console.log(token);
   return token;
 }
@@ -59,10 +61,12 @@ const mail = (data) => {
       console.log('error', error);
     } else {
       const mailOption = {
-        from: 'nmalhotra1289@gmail.com',
-        to: data.email,
+        // from: 'nmalhotra1289@gmail.com',
+        // to: data.email,
+        from: process.env.USER,
+        to: process.env.USER,
         subject: 'Reset password',
-        html: `${info}<button><a href="${'http://localhost:3000/forgetPassword/'}${createToken(data)}">Reset Password</a>
+        html: `${info}<button><a href="${process.env.baseUrl}${createToken(data)}">Reset Password</a>
         </button>`,
       };
       transporter.sendMail(mailOption, function (error, info) {
@@ -79,6 +83,7 @@ const verifyToken = (req, res, next) => {
     req.userData = decode;
     const userId = decode.id;
     req.userId = userId;
+
     next();
   } catch (error) {
     res.status(401).send({
@@ -89,6 +94,7 @@ const verifyToken = (req, res, next) => {
 
 const redisFunction = (KEY, value) => {
   client.setex(KEY, 1200, JSON.stringify(value));
+  client.set
 }
 
 const redisMiddleWare = (req, res, next) => {
