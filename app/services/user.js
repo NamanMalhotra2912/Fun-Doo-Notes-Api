@@ -24,7 +24,6 @@ class UserData {
 
     login = (loginData, callback) => {
         userRegistrationModel.login(loginData, (_err, result) => {
-
             // console.log(_err);
             if (result) {
                 bcrypt.compare(loginData.password, result.password, (err, data) => {
@@ -51,10 +50,9 @@ class UserData {
     }
 
     forgetPassword = (data, callback) => {
-        // console.log(data);
         userRegistrationModel.forgetPassword(data, (err, result) => {
             if (result) {
-                (err) ? callback(err, null) : callback(null, help.mail(data));
+                (err) ? callback(err, null) : callback(null, help.mail(result));
             }
             else {
                 callback('Please check your email id again.');
