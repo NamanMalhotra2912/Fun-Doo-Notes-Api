@@ -86,7 +86,7 @@ class UserRegistration {
                     res.status(200).send({
                         success: true,
                         message: "You are Logged in Successfully.",
-                        Token: createTokenForUser(result),
+                        Token: createToken(result),
                         // data : result
                     });
                 }
