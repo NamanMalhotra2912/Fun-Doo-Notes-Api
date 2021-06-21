@@ -66,7 +66,7 @@ class UserRegistration {
      * 
      * @method createLogin method for login  
      * @description Creating the login for user 
-     * @returns login status.
+     * @returns login status
      */
     login = (req, res) => {
         try {
