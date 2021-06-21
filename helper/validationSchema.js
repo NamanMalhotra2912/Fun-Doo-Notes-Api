@@ -35,6 +35,7 @@ const registationSchema = joi.object({
  * @description Creating token for validation. 
  */
 const createToken = (result) => {
+  // console.log("result ", result);
   const token = jwt.sign({ email: result.email, id: result._id }, process.env.JWT, { expiresIn: '1 day' },
   );
   client.setex('token', 1200, token)
@@ -73,19 +74,24 @@ const mail = (data) => {
 
 const verifyToken = (req, res, next) => {
   try {
+    // console.log("try");
     const decode = jwt.verify(req.headers.token, process.env.JWT);
-    // console.log(decode);
+    // console.log("try decode", decode);
     client.get('token', (err, token) => {
-      if (err) {
-        throw err
-      }
+      if (err) throw err;
+
       if (req.headers.token === token) {
+        console.log("enter");
         req.userData = decode;
+        console.log("decode here :", decode);
         const userId = decode.id;
+        console.log("User : ", userId);
         req.userId = userId;
+        console.log("Req : ", req.userId);
       }
+      next();
     })
-    next();
+
   } catch (error) {
     res.status(401).send({
       error: 'Your token has expiered',
