@@ -186,7 +186,7 @@ class NoteApi {
                 return res.status(200).send({
                     success: true,
                     message: 'Your label is added to the note successfully',
-                    data
+                    // data
                 });
             });
         } catch (err) {
