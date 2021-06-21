@@ -32,11 +32,7 @@ class UserData {
                         callback(err, null);
                     }
                     if (data) {
-                        const resultSuccess = {
-                            // message: 'Successfully logeed in',
-                            data: result
-                        };
-                        callback(null, resultSuccess)
+                        callback(null, result)
 
                     } else {
                         callback('Please enter correct password')
