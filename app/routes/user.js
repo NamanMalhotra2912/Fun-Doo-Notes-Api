@@ -20,7 +20,7 @@ module.exports = (app) => {
 
     app.post('/register', user.createUser);
 
-    app.post('/login', user.createLogin);
+    app.post('/login', user.login);
 
     app.post('/forgetPassword', user.forgetPassword);
 
