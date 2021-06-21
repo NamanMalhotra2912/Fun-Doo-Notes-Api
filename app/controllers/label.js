@@ -23,7 +23,7 @@ class LabelController {
                 userId: req.userId,
             };
             const labelData = await services.createLabel(labelDetails);
-            console.log(labelData);
+            // console.log(labelData);
             if (labelData !== null) {
                 return res.status(200).send({
                     success: true,
