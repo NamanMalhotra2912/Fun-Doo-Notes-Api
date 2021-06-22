@@ -24,10 +24,8 @@ class UserData {
 
     login = (loginData, callback) => {
         userRegistrationModel.login(loginData, (_err, result) => {
-            // console.log(_err);
             if (result) {
                 bcrypt.compare(loginData.password, result.password, (err, data) => {
-
                     if (err) {
                         callback(err, null);
                     }
@@ -55,7 +53,6 @@ class UserData {
             }
         });
     };
-
 
     resetPassword = (data, callback) => {
         userRegistrationModel.resetPassword(data, callback);
