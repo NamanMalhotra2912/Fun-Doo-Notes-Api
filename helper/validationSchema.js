@@ -32,7 +32,7 @@ const registationSchema = joi.object({
 /**
  * 
  * @function  createToken to create the token.  
- * @description Creating token for validation. 
+ * @description Creating token and set the token inside the redis.
  */
 const createToken = (result) => {
   const token = jwt.sign({ email: result.email, id: result._id }, process.env.JWT, { expiresIn: '1 day' },
@@ -41,8 +41,9 @@ const createToken = (result) => {
   return token;
 }
 /**
- *
- * @description Using nodemailer to send password reset mail.
+ * 
+ * @param {*} data 
+ * @description : using nodemailer to send the mail to user.
  */
 const mail = (data) => {
   const transporter = nodemailer.createTransport({
@@ -70,6 +71,13 @@ const mail = (data) => {
     }
   });
 }
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @description : verifyToken will validate the token generated
+ */
 
 const verifyToken = (req, res, next) => {
   try {
@@ -79,7 +87,6 @@ const verifyToken = (req, res, next) => {
       if (req.headers.token === token) {
         req.userData = decode;
         const userId = decode.id;
-        req.userId = userId;
       }
       next();
     })
@@ -90,12 +97,23 @@ const verifyToken = (req, res, next) => {
     });
   }
 };
-
+/**
+ * 
+ * @param {*} KEY 
+ * @param {*} value 
+ * @description : here we have set the key and value in redis function
+ */
 const redisFunction = (KEY, value) => {
   client.setex(KEY, 1200, JSON.stringify(value));
 
 }
-
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @description : redisMiddleWare is the middle ware of the redis.
+ */
 const redisMiddleWare = (req, res, next) => {
   client.get('note', (err, note) => {
     if (err) {
