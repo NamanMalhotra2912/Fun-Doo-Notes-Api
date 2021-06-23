@@ -23,7 +23,7 @@ const noteData = require('./notes.json');
 chai.should();
 
 describe('notes', () => {
-  it('given_Correct_Details_Should_Able_ToCreate_Note', (done) => {
+  it.skip('given_Correct_Details_Should_Able_ToCreate_Note', (done) => {
     chai.request(server).post('/notes').set('token', `${noteData.notes.genratedToken.token}`)
       .send(noteData.notes.createNote).end((err, res) => {
         res.should.have.status(200);
@@ -33,7 +33,7 @@ describe('notes', () => {
 });
 
 describe('inCorrectNotes', () => {
-  it('given_Wrong_Details_Should_Not_Be_Able_ToCreate_Note', (done) => {
+  it.skip('given_Wrong_Details_Should_Not_Be_Able_ToCreate_Note', (done) => {
     chai.request(server).post('/notes').set('token', `${noteData.notes.genratedToken.token}`)
       .send(noteData.notes.createNoteWithWrongData).end((err, res) => {
         res.should.have.status(400);
@@ -43,7 +43,7 @@ describe('inCorrectNotes', () => {
 });
 
 describe('updateNote', () => {
-  it('given_Correct_Details_Should_Be_Able_To_Update_Note', (done) => {
+  it.skip('given_Correct_Details_Should_Be_Able_To_Update_Note', (done) => {
     chai.request(server).put('/notes/60b700f1ad79c735800ccba3').set('token', `${noteData.notes.genratedToken.token}`)
       .send(noteData.notes.updateNoteDetails).end((err, res) => {
         res.should.have.status(200);
@@ -53,7 +53,7 @@ describe('updateNote', () => {
 });
 
 describe('retreiveNotes', () => {
-  it('given_Correct_Details_should_Retrive_Note', (done) => {
+  it.skip('given_Correct_Details_should_Retrive_Note', (done) => {
     chai.request(server).get('/notes').set('token', `${noteData.notes.genratedToken.token}`)
       .send().end((err, res) => {
         res.should.have.status(200);
@@ -63,7 +63,7 @@ describe('retreiveNotes', () => {
 });
 
 describe('deleteNotes', () => {
-  it('given_Correct_Details_should_Delete_Note', (done) => {
+  it.skip('given_Correct_Details_should_Delete_Note', (done) => {
     chai.request(server).delete('/notes/60ab2657c154d831f0b562a2').set('token', `${noteData.notes.genratedToken.token}`)
       .send().end((err, res) => {
         res.should.have.status(404);
