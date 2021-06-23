@@ -6,194 +6,208 @@ chai.use(chaiHttp);
 const labelData = require('./labels.json');
 
 chai.should();
-describe('createLabel', () => {
-    it.only('givenLabelDetails_whenProper_ShouldCreateLabel', () => {
-        chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.token}`)
-            .send(labelData.labels.createLabel).end((err, res) => {
-                res.should.have.status(200);
-            });
-    });
-    it('givedata_whenImProper_ShouldNotCreateLabel', () => {
-        chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.token}`)
-            .send().end((err, res) => {
-                res.should.have.status(500);
-            });
-    });
-    it.only('givenToken_whenImProper_shouldNotCreateLabel', () => {
-        chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.wrongToken}`)
-            .send(labelData.labels.createLabel)
+let token = ' ';
+
+describe('Labels', () => {
+    before((done) => {
+        chai.request(server).post('/login')
+            .send(labelData.labels.login)
             .end((err, res) => {
-                res.should.have.status(401);
+                token = res.body.token
+                console.log("res :", res);
+                done();
             });
     });
+
+    describe.only('create Label', () => {
+        it('givenLabelDetails_whenProper_ShouldCreateLabel', () => {
+            chai.request(server).post('/label').set('token', token)
+                .send(labelData.labels.createLabel).end((err, res) => {
+                    res.should.have.status(200);
+                });
+        });
+        it('givenLabelDetails_whenWrong_ShouldNotCreateLabel', () => {
+            chai.request(server).post('/label').set('token', token)
+                .send().end((err, res) => {
+                    res.should.have.status(500);
+                });
+        });
+        it('givenToken_whenWrong_shouldNotCreateLabel', () => {
+            chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.wrongToken}`)
+                .send(labelData.labels.createLabel)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+
+    });
+
+    describe('retrieve Label', () => {
+        it('giveToken_whenProper_ShouldRetrieveLabel', () => {
+            chai.request(server).get('/label').set('token', token)
+                .send().end((err, res) => {
+                    res.should.have.status(200);
+                });
+        });
+        it('givenToken_whenWrong_shouldNotCreateLabel', () => {
+            chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.wrongToken}`)
+                .send(labelData.labels.createLabel)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+    });
+
+    describe('update Label', () => {
+        it('giveCorrectIdForUpdate_whenProper_ShouldUpdateLabel', () => {
+            chai.request(server).put('/label/60bed76e9315901fa8648bda')
+                .set('token', token)
+                .send(labelData.labels.updateLabel).end((err, res) => {
+                    res.should.have.status(200);
+                });
+        });
+        it('givenLabelId_whenWrong_ShouldNotUpdateLabel', () => {
+            chai.request(server).put('/label/60bed76e9315901648bda')
+                .set('token', token)
+                .send(labelData.labels.updateLabel)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                });
+        });
+        it('givenTokenDetails_whenWrong_shouldNotCreateLabel', () => {
+            chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.wrongToken}`)
+                .send(labelData.labels.createLabel)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+
+    });
+
+    describe('delete Label', () => {
+        it('giveLabelId_whenProper_shouldDeleteLabel', () => {
+            chai.request(server).delete('/label/60bee68f2bea9217f44af367')
+                .set('token', token).send().end((err, res) => {
+                    res.should.have.status(200);
+                });
+        });
+
+        it('giveLabelId_whenWrong_ShouldNotDeleteLabel', () => {
+            chai.request(server).delete('/label/60bee68f2bea9217f4467')
+                .set('token', token).send()
+                .end((err, res) => {
+                    res.should.have.status(400);
+                });
+        });
+        it('givenTokenDetails_whenWrong_shouldNotDeleteLabel', () => {
+            chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.wrongToken}`)
+                .send(labelData.labels.createLabel)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+    });
+
+    describe('add Label To Note', () => {
+        it('givenLabelAndNoteId_whenProper_shouldAddLabelToTheNote', () => {
+            chai.request(server).post('/addLabelToNote').set('token', token)
+                .send(labelData.labels.addLabelIntoNote)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                });
+        });
+        it('givenLabelId_whenWrong_ShouldNotAddLabelToNote', () => {
+            chai.request(server).delete('/label/60c2cb2932aa660f550')
+                .set('token', token).send()
+                .end((err, res) => {
+                    res.should.have.status(400);
+                });
+        });
+        it('givenTokenDetails_whenWrong_ShouldNotAddLabelToNote', () => {
+            chai.request(server).post('/addLabelToNote').set('token', `${labelData.labels.genratedToken.wrongToken}`)
+                .send(labelData.labels.addLabelIntoNote)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+        it('givenTokenDetails_whenMissing_shouldNotAddLabelToTheNote', () => {
+            chai.request(server).post('/addLabelToNote').send(labelData.labels.addLabelIntoNote)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+    });
+
+    describe('remove Label From Note', () => {
+        it('givenLabelAndNoteId_whenProper_shouldRemoveLabelFromNote', () => {
+            chai.request(server).delete('/removeLabelFromNote')
+                .set('token', token)
+                .send(labelData.labels.addLabelIntoNote)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                });
+        });
+        it('givenTokenDetails_whenWrong_shouldNotRemoveLabelFromNote', () => {
+            chai.request(server).delete('/removeLabelFromNote')
+                .set('token', `${labelData.labels.genratedToken.wrongToken}`)
+                .send(labelData.labels.addLabelIntoNote)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+        it('givenTokenDetails_whenNotAvailable_shouldNotRemoveLabelFromNote', () => {
+            chai.request(server).delete('/removeLabelFromNote').send(labelData.labels.addLabelIntoNote)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+    });
+
+    describe('add Collaborator intoNote', () => {
+        it('givenCollaboratorDetails_whenProper_shouldAddCollaborator', () => {
+            chai.request(server).post('/addCollaborator').set('token', token)
+                .send(labelData.labels.addCollaboratorintoNote)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                });
+        });
+        it('givenTokenDetails_whenWrong_shouldNotAddCollaborator', () => {
+            chai.request(server).post('/addLabelToNote').set('token', `${labelData.labels.genratedToken.wrongToken}`)
+                .send(labelData.labels.addCollaboratorintoNote)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                });
+        });
+        it('givenTokenDetails_whenNotAvailable_shouldNotAddCollaborator', () => {
+            chai.request(server).post('/addLabelToNote').send(labelData.labels.addCollaboratorintoNote)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+    })
+
+    describe('remove Collaborator From Note', () => {
+        it('givenCollaboratorDetails_whenProper_shouldRemoveCollaborator', () => {
+            chai.request(server).delete('/removeCollaborator').set('token', token)
+                .send(labelData.labels.addCollaboratorintoNote)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                });
+        });
+        it('givenTokenDetails_whenWrong_shouldNotRemoveCollaborator', () => {
+            chai.request(server).delete('/removeCollaborator')
+                .set('token', `${labelData.labels.genratedToken.wrongToken}`)
+                .send(labelData.labels.addCollaboratorintoNote)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+        it('givenTokenDetails_whenNotAvailable_shouldNotRemoveLabelFromNote', () => {
+            chai.request(server).delete('/removeCollaborator').send(labelData.labels.addCollaboratorintoNote)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                });
+        });
+    })
 
 });
-
-describe('retrieveLabel', () => {
-    it.only('giveToken_whenProper_ShouldRetrieveLabel', () => {
-        chai.request(server).get('/label').set('token', `${labelData.labels.genratedToken.token}`)
-            .send().end((err, res) => {
-                res.should.have.status(200);
-            });
-    });
-    it.only('givenToken_whenImProper_shouldNotCreateLabel', () => {
-        chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.wrongToken}`)
-            .send(labelData.labels.createLabel)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-});
-
-describe('updateLabel', () => {
-    it.only('giveUpdatedata_whenProper_ShouldUpdateLabel', () => {
-        chai.request(server).put('/label/60bed76e9315901fa8648bda').set('token',
-            `${labelData.labels.genratedToken.token}`)
-            .send(labelData.labels.updateLabel).end((err, res) => {
-                res.should.have.status(200);
-            });
-    });
-
-    it.only('giveUpdatedata_whenImProper_WithWrongLabelId_ShouldNotUpdateLabel', () => {
-        chai.request(server).put('/label/60bed76e9315901648bda')
-            .set('token', `${labelData.labels.genratedToken.token}`)
-            .send(labelData.labels.updateLabel)
-            .end((err, res) => {
-                res.should.have.status(400);
-            });
-    });
-    it.only('givenToken_whenImProper_shouldNotCreateLabel', () => {
-        chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.wrongToken}`)
-            .send(labelData.labels.createLabel)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-
-});
-
-describe('deleteLabel', () => {
-    it.only('giveLabelIddata_whenProper_ShouldDeleteLabel', () => {
-        chai.request(server).delete('/label/60bee68f2bea9217f44af367')
-            .set('token', `${labelData.labels.genratedToken.token}`).send().end((err, res) => {
-                res.should.have.status(200);
-            });
-    });
-
-    it.only('giveLabelIddata_whenImProper_ShouldNotDeleteLabel', () => {
-        chai.request(server).delete('/label/60bee68f2bea9217f4467')
-            .set('token', `${labelData.labels.genratedToken.token}`).send()
-            .end((err, res) => {
-                res.should.have.status(400);
-            });
-    });
-    it.only('givenToken_whenImProper_shouldNotCreateLabel', () => {
-        chai.request(server).post('/label').set('token', `${labelData.labels.genratedToken.wrongToken}`)
-            .send(labelData.labels.createLabel)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-});
-
-describe('addLabelToNote', () => {
-    it.only('givenLabelAndNoteId_whenProper_shouldAddLabelToTheNote', () => {
-        chai.request(server).post('/addLabelToNote').set('token', `${labelData.labels.genratedToken.token}`)
-            .send(labelData.labels.addLabelIntoNote)
-            .end((err, res) => {
-                res.should.have.status(200);
-            });
-    });
-    it.only('givenLabelId_whenImProper_ShouldNotDeleteLabel', () => {
-        chai.request(server).delete('/label/60c2cb2932aa660f550')
-            .set('token', `${labelData.labels.genratedToken.token}`).send()
-            .end((err, res) => {
-                res.should.have.status(400);
-            });
-    });
-    it.only('givenToken_whenImProper_shouldNotAddLabelToNote', () => {
-        chai.request(server).post('/addLabelToNote').set('token', `${labelData.labels.genratedToken.wrongToken}`)
-            .send(labelData.labels.addLabelIntoNote)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-    it.only('givenToken_whenMissing_shouldNotAddLabelToTheNote', () => {
-        chai.request(server).post('/addLabelToNote').send(labelData.labels.addLabelIntoNote)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-});
-
-describe('removeLabelToNote', () => {
-    it.only('givenLabelAndNoteId_whenProper_shouldRemoveLabelFromNote', () => {
-        chai.request(server).delete('/removeLabelFromNote')
-            .set('token', `${labelData.labels.genratedToken.token}`)
-            .send(labelData.labels.addLabelIntoNote)
-            .end((err, res) => {
-                res.should.have.status(200);
-            });
-    });
-    it.only('givenToken_whenImProper_shouldNotRemoveLabelFromNote', () => {
-        chai.request(server).delete('/removeLabelFromNote')
-            .set('token', `${labelData.labels.genratedToken.wrongToken}`)
-            .send(labelData.labels.addLabelIntoNote)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-    it.only('givenToken_whenMissing_shouldNotRemoveLabelFromNote', () => {
-        chai.request(server).delete('/removeLabelFromNote').send(labelData.labels.addLabelIntoNote)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-});
-
-describe('addCollaboratorintoNote', () => {
-    it.only('givenCollaborator_whenProper_shouldAddCollaborator', () => {
-        chai.request(server).post('/addCollaborator').set('token', `${labelData.labels.genratedToken.token}`)
-            .send(labelData.labels.addCollaboratorintoNote)
-            .end((err, res) => {
-                res.should.have.status(200);
-            });
-    });
-    it.only('givenToken_whenImProper_shouldNotAddCollaborator', () => {
-        chai.request(server).post('/addLabelToNote').set('token', `${labelData.labels.genratedToken.wrongToken}`)
-            .send(labelData.labels.addCollaboratorintoNote)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-    it.only('givenToken_whenMissing_shouldNotAddCollaborator', () => {
-        chai.request(server).post('/addLabelToNote').send(labelData.labels.addCollaboratorintoNote)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-})
-
-describe('removeCollaboratorFromNote', () => {
-    it.only('givenCollaborator_whenProper_shouldDeleteCollaborator', () => {
-        chai.request(server).delete('/removeCollaborator').set('token', `${labelData.labels.genratedToken.token}`)
-            .send(labelData.labels.addCollaboratorintoNote)
-            .end((err, res) => {
-                res.should.have.status(200);
-            });
-    });
-    it.only('givenToken_whenImProper_shouldNotDeleteCollaborator', () => {
-        chai.request(server).delete('/removeCollaborator')
-            .set('token', `${labelData.labels.genratedToken.wrongToken}`)
-            .send(labelData.labels.addCollaboratorintoNote)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-    it.only('givenToken_whenMissing_shouldNotRemoveLabelFromNote', () => {
-        chai.request(server).delete('/removeCollaborator').send(labelData.labels.addCollaboratorintoNote)
-            .end((err, res) => {
-                res.should.have.status(401);
-            });
-    });
-})
