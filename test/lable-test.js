@@ -13,13 +13,12 @@ describe('Labels', () => {
         chai.request(server).post('/login')
             .send(labelData.labels.login)
             .end((err, res) => {
-                token = res.body.token
-                console.log("res :", res);
+                token = res.body.Token
                 done();
             });
     });
 
-    describe.only('create Label', () => {
+    describe('create Label', () => {
         it('givenLabelDetails_whenProper_ShouldCreateLabel', () => {
             chai.request(server).post('/label').set('token', token)
                 .send(labelData.labels.createLabel).end((err, res) => {
@@ -163,23 +162,24 @@ describe('Labels', () => {
         });
     });
 
-    describe('add Collaborator intoNote', () => {
+    describe('add Collaborator into Note', () => {
         it('givenCollaboratorDetails_whenProper_shouldAddCollaborator', () => {
-            chai.request(server).post('/addCollaborator').set('token', token)
+            chai.request(server).post('/addCollaborator')
+                .set('token', token)
                 .send(labelData.labels.addCollaboratorintoNote)
                 .end((err, res) => {
                     res.should.have.status(200);
                 });
         });
         it('givenTokenDetails_whenWrong_shouldNotAddCollaborator', () => {
-            chai.request(server).post('/addLabelToNote').set('token', `${labelData.labels.genratedToken.wrongToken}`)
+            chai.request(server).post('/addCollaborator').set('token', `${labelData.labels.genratedToken.wrongToken}`)
                 .send(labelData.labels.addCollaboratorintoNote)
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    res.should.have.status(401);
                 });
         });
         it('givenTokenDetails_whenNotAvailable_shouldNotAddCollaborator', () => {
-            chai.request(server).post('/addLabelToNote').send(labelData.labels.addCollaboratorintoNote)
+            chai.request(server).post('/addCollaborator').send(labelData.labels.addCollaboratorintoNote)
                 .end((err, res) => {
                     res.should.have.status(401);
                 });
