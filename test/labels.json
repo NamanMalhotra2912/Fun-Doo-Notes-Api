@@ -1,7 +1,6 @@
 {
     "labels": {
         "genratedToken": {
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhamt1bWFyQGdtYWlsLmNvbSIsImlkIjoiNjBjMmQzY2MzYzE2YjkwMjk4ZWU5YjNiIiwiaWF0IjoxNjIzMzgwOTY2LCJleHAiOjE2MjM0NjczNjZ9.TFF4PrDFlhuinR0XSBjZrk0IxYPHW-zXiBKByRbjbqc",
             "wrongToken": "eyJhNiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZtYWxBnbWFpbC5jb2jYwYjc5NTM3NTUxM2Q2MzE3ODM4ODc3YiIsImlhdCI6MTYyMzIxMDAxMCwiZXhwIjoxNjIzMjk2NDEwfQ.ugcNVkm2rJdRj10RxIcgvxU"
         },
         "createLabel": {
@@ -17,6 +16,10 @@
         "addCollaboratorintoNote":{
         "collaborator": "60b795375513d6317838877b",
              "noteId" : "60c2d44e733d0d396cf91239"
+        },
+        "login":{
+            "email": "harrymalhotra@gmail.com",
+            "password" : "Harmalhotra@4321"
         }
     }
 }
