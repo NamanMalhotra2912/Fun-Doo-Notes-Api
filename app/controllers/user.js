@@ -169,5 +169,40 @@ class UserRegistration {
         }
 
     }
+
+    socialLogin = (req, res) => {
+        try {
+            const socialLoginData = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                userName: req.body.email,
+                password: null,
+                googleId: req.googleId,
+                googleLogin: false
+            }
+            user.socialLogin(socialLoginData, (erorr, result) => {
+                if (error) {
+                    res.status(400).send({
+                        success: false,
+                        message: "Please check again for login",
+                        // error
+                    });
+                }
+                else {
+                    res.status(200).send({
+                        success: true,
+                        message: "You are Logged in Successfully.",
+                        Token: createToken(result),
+                        // data : result
+                    });
+                }
+            })
+        } catch (error) {
+            res.status(500).send({
+                success: false,
+                message: "Internal error from server"
+            })
+        }
+    }
 };
 module.exports = new UserRegistration();
