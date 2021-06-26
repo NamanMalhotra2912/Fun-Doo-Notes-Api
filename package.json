@@ -8,10 +8,11 @@
     "start": "nodemon server.js",
     "lint": "eslint ./",
     "debug": "nodemon --inspect server.js",
-    "coverage" : "nyc --reporter=text npm run test"
-  },"nyc" :{
-    "include" : "test",
-    "exclude" : "app"
+    "coverage": "nyc --reporter=text npm run test"
+  },
+  "nyc": {
+    "include": "test",
+    "exclude": "app"
   },
   "author": "Neeraj_Malhotra",
   "license": "ISC",
@@ -26,11 +27,14 @@
     "eslint-config-standard": "^16.0.2",
     "express": "^4.17.1",
     "express-joi-validation": "^5.0.0",
+    "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^8.4.0",
     "mongoose": "^5.12.7",
     "nodemailer": "^6.6.0",
     "nyc": "^15.1.0",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
     "redis": "^3.1.2",
     "swagger-ui-express": "^4.1.6",
     "winston": "^3.3.3"
