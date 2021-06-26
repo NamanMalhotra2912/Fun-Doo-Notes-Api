@@ -9,12 +9,16 @@
  * @version         : 1.0.0
  * 
  **************************************************************************/
+const passport = require('passport');
 const user = require('../controllers/user.js');
 const note = require('../controllers/note.js');
 const LabelController = require('../controllers/label.js');
 const { verifyToken, redisMiddleWare } = require('../../helper/validationSchema.js');
-/** 
- * @description Creating the routes.
+const { passportAuth } = require('../../helper/passportAuthentication.js');
+/**
+ * 
+ * @param {*} app 
+ * @description creating the routes for api's
  */
 module.exports = (app) => {
 
@@ -49,5 +53,12 @@ module.exports = (app) => {
     app.post('/addCollaborator', verifyToken, note.addCollaborator);
 
     app.delete('/removeCollaborator', verifyToken, note.removeCollaborator);
+
+    app.get('/failed', (req, res) => res.send('Failed to login'))
+
+    app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+    app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
+        passportAuth, user.socialLogin);
 
 }
