@@ -57,5 +57,9 @@ class UserData {
     resetPassword = (data, callback) => {
         userRegistrationModel.resetPassword(data, callback);
     }
+
+    socialLogin = (data, callback) => {
+        userRegistrationModel.socialLogin(data, callback);
+    }
 }
 module.exports = new UserData();
