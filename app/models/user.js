@@ -11,6 +11,7 @@
  **************************************************************************/
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { boolean } = require('@hapi/joi');
 /**
  * 
  * @method  userSchema method  
@@ -31,6 +32,12 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String
+    },
+    googleId: {
+        type: String
+    },
+    googleLogin: {
+        type: Boolean
     },
 }, {
     versionKey: false
@@ -75,6 +82,11 @@ class UserRegistrationModel {
         const encrypt = await bcrypt.hash(data.password, salt);
         UserRegistrationModel.findOneAndUpdate({ email: data.email }, { password: encrypt }, { new: true }, callback(null, data));
     }
+
+    // socialLogin = async (socialLoginData, callback) => {
+    //     const check = await userModel.findOne({ email: socialLoginData.email })
+    //     check ? callback(null, check) : callback("login failed");
+    // };
 }
 
 module.exports = new UserRegistrationModel;
