@@ -58,8 +58,18 @@ class UserData {
         userRegistrationModel.resetPassword(data, callback);
     }
 
-    socialLogin = (data, callback) => {
-        userRegistrationModel.socialLogin(data, callback);
+    socialLogin = (socialLoginData, callback) => {
+        userRegistrationModel.socialLogin(socialLoginData, (err, result) => {
+            if (err) {
+                callback(err, null);
+            }
+            if (data) {
+                callback(null, result)
+
+            } else {
+                callback('Please check for details');
+            }
+        });
     }
 }
 module.exports = new UserData();
