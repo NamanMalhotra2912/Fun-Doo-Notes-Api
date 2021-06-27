@@ -14,7 +14,7 @@ const user = require('../controllers/user.js');
 const note = require('../controllers/note.js');
 const LabelController = require('../controllers/label.js');
 const { verifyToken, redisMiddleWare } = require('../../helper/validationSchema.js');
-const { passportAuth } = require('../../helper/passportAuthentication.js');
+const { isLoggedIn } = require('../../helper/passportAuthentication.js');
 /**
  * 
  * @param {*} app 
@@ -58,7 +58,7 @@ module.exports = (app) => {
 
     app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-    app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
-        passportAuth, user.socialLogin);
+    app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' })
+        , isLoggedIn, user.socialLogin);
 
 }
