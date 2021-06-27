@@ -80,13 +80,13 @@ class UserRegistrationModel {
         // console.log(data.email);
         const salt = await bcrypt.genSalt(10);
         const encrypt = await bcrypt.hash(data.password, salt);
-        UserRegistrationModel.findOneAndUpdate({ email: data.email }, { password: encrypt }, { new: true }, callback(null, data));
+        userModel.findOneAndUpdate({ email: data.email }, { password: encrypt }, { new: true }, callback(null, data));
     }
 
-    // socialLogin = async (socialLoginData, callback) => {
-    //     const check = await userModel.findOne({ email: socialLoginData.email })
-    //     check ? callback(null, check) : callback("login failed");
-    // };
+    socialLogin = async (socialLoginData, callback) => {
+        const check = await userModel.findOne({ userName: socialLoginData.userName })
+        check ? callback(null, check) : callback("login failed");
+    };
 }
 
 module.exports = new UserRegistrationModel;
