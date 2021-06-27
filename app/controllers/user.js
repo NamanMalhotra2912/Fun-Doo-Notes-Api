@@ -10,7 +10,7 @@
  * 
 **************************************************************************/
 
-const { registationSchema, createToken, createTokenForUser } = require('../../helper/validationSchema.js');
+const { registationSchema, createToken } = require('../../helper/validationSchema.js');
 const user = require('../services/user.js');
 const jwt = require('jsonwebtoken');
 
@@ -170,39 +170,32 @@ class UserRegistration {
 
     }
 
-    socialLogin = (req, res) => {
-        try {
-            const socialLoginData = {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                userName: req.body.email,
-                password: null,
-                googleId: req.googleId,
-                googleLogin: false
+    socialLogin(req, res) {
+        const googleProfile = req.user.profile;
+        const socialLoginData = {
+            firstName: googleProfile.name.givenName,
+            lastName: googleProfile.name.familyName,
+            userName: googleProfile.emails[0].value,
+            password: null,
+            googleId: googleProfile.id,
+            googleLogin: true,
+        };
+        user.socialLogin(socialLoginData, (error, result) => {
+            if (error) {
+                res.status(400).send({
+                    success: false,
+                    message: "Please check again for login",
+                    // error
+                });
             }
-            user.socialLogin(socialLoginData, (erorr, result) => {
-                if (error) {
-                    res.status(400).send({
-                        success: false,
-                        message: "Please check again for login",
-                        // error
-                    });
-                }
-                else {
-                    res.status(200).send({
-                        success: true,
-                        message: "You are Logged in Successfully.",
-                        Token: createToken(result),
-                        // data : result
-                    });
-                }
-            })
-        } catch (error) {
-            res.status(500).send({
-                success: false,
-                message: "Internal error from server"
-            })
-        }
-    }
+            else {
+                res.status(200).send({
+                    success: true,
+                    message: "You are Logged in Successfully.",
+                    data: result
+                });
+            }
+        })
+    };
 };
 module.exports = new UserRegistration();
