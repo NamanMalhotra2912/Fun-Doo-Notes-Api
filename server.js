@@ -7,8 +7,10 @@ require('./config/databaseConfig.js');
 require('./config/redisDatabaseConfig.js');
 const swagger = require('swagger-ui-express');
 const swaggerData = require('./swagger.json');
+const passport = require('passport');
 
 const port = process.env.PORT;
+
 /**
  * create express app
  */
@@ -29,6 +31,13 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.json({ "message": "Welcome to Fun Doo Notes application. Take notes quickly. Organize and keep track of all your notes." });
 });
+/**
+ * Initialising passport for social login
+ */
+require('./helper/passport');
+
+app.use(passport.initialize());
+require('./app/routes/user')(app);
 /**
  * Require Notes routes
  */
