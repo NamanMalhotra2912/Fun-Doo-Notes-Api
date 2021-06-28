@@ -1,15 +1,19 @@
+/**
+ * @description : using passport strategy for social login
+ */
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.serializeUser((user, done) => {
-    // console.log("User here : ", user);
     done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
     done(null, user);
 });
-
+/**
+ * @description : it will use credentials of google api console for social login
+ */
 passport.use(new GoogleStrategy({
     clientID: process.env.Client_ID,
     clientSecret: process.env.Client_secret,
@@ -20,8 +24,6 @@ passport.use(new GoogleStrategy({
             profile,
             token: accessToken
         };
-        console.log("Access token : ", accessToken);
-        console.log("Profile details : ", profile);
         return done(null, tokenDetails);
     }
 ));
