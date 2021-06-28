@@ -169,7 +169,12 @@ class UserRegistration {
         }
 
     }
-
+    /**
+     * 
+     * @param {*} req 
+     * @param {*} res 
+     * @description : creating the socialLogin api to do login through google
+     */
     socialLogin(req, res) {
         const googleProfile = req.user.profile;
         const socialLoginData = {
@@ -185,14 +190,13 @@ class UserRegistration {
                 res.status(400).send({
                     success: false,
                     message: "Please check again for login",
-                    // error
                 });
             }
             else {
                 res.status(200).send({
                     success: true,
                     message: "You are Logged in Successfully.",
-                    data: result
+                    result
                 });
             }
         })
