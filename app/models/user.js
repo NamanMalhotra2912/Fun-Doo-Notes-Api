@@ -60,32 +60,65 @@ userSchema.pre('save', async function (next) {
 const userModel = mongoose.model('User', userSchema);
 
 class UserRegistrationModel {
+    /**
+     * 
+     * @param {*} userData 
+     * @param {*} callback 
+     * @description : createUser will take the request from services and create the user according to schema
+     */
     createUser = (userData, callback) => {
         const user = new userModel(userData);
         user.save((err, userResult) => {
             (err) ? callback(err, null) : callback(null, userResult);
         });
     };
-
+    /**
+     * 
+     * @param {*} loginData 
+     * @param {*} callback 
+     * @description : login will allow the user to pass details for login
+     */
     login = async (loginData, callback) => {
         const check = await userModel.findOne({ email: loginData.email })
         check ? callback(null, check) : callback("login failed");
     };
-
+    /**
+     * 
+     * @param {*} data 
+     * @param {*} callback 
+     * @description : forgetPassword will help the user to reset the password
+     */
     forgetPassword = (data, callback) => {
         userModel.findOne({ email: data.email }, callback)
     }
-
+    /**
+     * 
+     * @param {*} data 
+     * @param {*} callback 
+     * @description : resetPassword will help the user to reset its password again
+     */
     resetPassword = async (data, callback) => {
         // console.log(data.email);
         const salt = await bcrypt.genSalt(10);
         const encrypt = await bcrypt.hash(data.password, salt);
         userModel.findOneAndUpdate({ email: data.email }, { password: encrypt }, { new: true }, callback(null, data));
     }
-
+    /**
+     * 
+     * @param {*} socialLoginData 
+     * @param {*} callback 
+     * @description : socialLogin will allow the user to login throgh google
+     */
     socialLogin = async (socialLoginData, callback) => {
-        const check = await userModel.findOne({ userName: socialLoginData.userName })
-        check ? callback(null, check) : callback("login failed");
+        const data = await userModel({
+            'firstName': socialLoginData.firstName,
+            'lastName': socialLoginData.lastName,
+            'userName': socialLoginData.userName,
+            'password': socialLoginData.password,
+            'googleId': socialLoginData.googleId,
+            'googleLogin': socialLoginData.googleLogin
+        })
+        data ? callback(null, data) : callback("login failed");
     };
 }
 
