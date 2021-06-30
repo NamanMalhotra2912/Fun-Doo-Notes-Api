@@ -19,6 +19,6 @@
     ],
     "rules": {
         "no-unused-var" : 0,
-        "no-console" : "off"
+        
     }
 }
