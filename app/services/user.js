@@ -86,22 +86,20 @@ class UserData {
      * @description : socialLogin will take the request from controller and perform the service here
      *                  and pass the details to models
      */
-    socialLogin = (socialLoginData, callback) => {
-        userRegistrationModel.socialLogin(socialLoginData, (err, result) => {
-            if (err) {
-                callback(err, null);
-            }
-            if (result) {
+    socialLogin(socialLoginData) {
+        return new Promise((resolve, reject) => {
+            userRegistrationModel.socialLogin(socialLoginData).then((result) => {
                 let payload = {
                     '_id': result._id,
                     'userName': result.userName
                 };
                 let token = jwt.sign(payload, process.env.JWT);
-                callback(null, token)
-            } else {
-                callback('Please check for details');
-            }
+                resolve({ result, token });
+            }).catch((err) => {
+                reject(err);
+            });
         });
     }
 }
+
 module.exports = new UserData();
