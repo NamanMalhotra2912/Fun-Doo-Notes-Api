@@ -109,16 +109,24 @@ class UserRegistrationModel {
      * @param {*} callback 
      * @description : socialLogin will allow the user to login throgh google
      */
-    socialLogin = async (socialLoginData, callback) => {
-        const data = await userModel({
-            'firstName': socialLoginData.firstName,
-            'lastName': socialLoginData.lastName,
-            'userName': socialLoginData.userName,
-            'password': socialLoginData.password,
-            'googleId': socialLoginData.googleId,
-            'googleLogin': socialLoginData.googleLogin
-        })
-        data ? callback(null, data) : callback("login failed");
+    async socialLogin(socialData) {
+        return userModel.findOne({ 'userName': socialData.userName }).then(result => {
+            if (result) {
+                return result
+            } else {
+                const details = new userModel({
+                    'firstName': socialData.firstName,
+                    'lastName': socialData.lastName,
+                    'userName': socialData.userName,
+                    'password': socialData.password,
+                    'googleId': socialData.googleId,
+                    'googleLogin': socialData.googleLogin,
+                });
+                return details.save();
+            }
+        }).catch(err => {
+            return ('Please check for the error', err);
+        });
     };
 }
 
