@@ -177,6 +177,7 @@ class UserRegistration {
      */
     socialLogin(req, res) {
         const googleProfile = req.user.profile;
+        const response = {};
         const socialLoginData = {
             firstName: googleProfile.name.givenName,
             lastName: googleProfile.name.familyName,
@@ -185,21 +186,16 @@ class UserRegistration {
             googleId: googleProfile.id,
             googleLogin: true,
         };
-        user.socialLogin(socialLoginData, (error, result) => {
-            if (error) {
-                res.status(400).send({
-                    success: false,
-                    message: "Please check again for login",
-                });
-            }
-            else {
-                res.status(200).send({
-                    success: true,
-                    message: "You are Logged in Successfully.",
-                    result
-                });
-            }
-        })
+        user.socialLogin(socialLoginData).then((result) => {
+            response.success = true,
+                response.message = 'You are Logged in successfully',
+                response.token = result.token;
+            return res.status(200).send(response);
+        }).catch((err) => {
+            response.status = false;
+            response.message = 'Login Failed';
+            return res.status(400).send(response);
+        });
     };
 };
 module.exports = new UserRegistration();
