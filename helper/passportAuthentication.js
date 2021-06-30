@@ -4,7 +4,10 @@ class Oauth {
 
             next()
         } else {
-            res.sendStatus(401);
+            const response = {};
+            response.success = false
+            response.message = "Token error in Google O-Auth"
+            return res.sendStatus(401).send(response);
         }
     };
 }
