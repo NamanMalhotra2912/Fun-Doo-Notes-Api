@@ -1,14 +1,15 @@
+/* eslint-disable spaced-comment */
 /*************************************************************************
  * Execution        : 1. default node       cmd> npm start
- * 
+ *
  * Purpose          : to create the validation schema for user Api using hapi-joi.
- *                    
- * 
+ *
  * @file            : validationSchema.js
  * @author          : Neeraj Malhotra
  * @version         : 1.0.0
- * 
+ *
  **************************************************************************/
+
 const joi = require('@hapi/joi');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -19,9 +20,8 @@ const { cli } = require('winston/lib/winston/config');
 const client = redis.createClient();
 
 /**
- * 
- * @var  registationSchema variable to pass joi object  
- * @description Applied the joi validation. 
+ * @var  registationSchema variable to pass joi object
+ * @description Applied the joi validation.
  */
 const registationSchema = joi.object({
   firstName: joi.string().min(3).pattern(/^[A-Z][a-zA-Z]{2}/).required(),
@@ -30,19 +30,16 @@ const registationSchema = joi.object({
   password: joi.string().pattern(/^[A-Z][a-zA-Z0-9]{5,}[$&^!@#()|,;:<>?/%-+][0-9]{3,}/).required()
 });
 /**
- * 
- * @function  createToken to create the token.  
+ * @function  createToken to create the token.
  * @description Creating token and set the token inside the redis.
  */
 const createToken = (result) => {
-  const token = jwt.sign({ email: result.email, id: result._id }, process.env.JWT, { expiresIn: '1 day' },
-  );
-  client.setex('token', 7200, token)
+  const token = jwt.sign({ email: result.email, id: result._id }, process.env.JWT, { expiresIn: '1 day' });
+  client.setex('token', 7200, token);
   return token;
-}
+};
 /**
- * 
- * @param {*} data 
+ * @param {*} data
  * @description : using nodemailer to send the mail to user.
  */
 const mail = (data) => {
