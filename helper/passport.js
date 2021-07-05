@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /**
  * @description : using passport strategy for social login
  */
@@ -17,13 +18,12 @@ passport.deserializeUser((user, done) => {
 passport.use(new GoogleStrategy({
     clientID: process.env.Client_ID,
     clientSecret: process.env.Client_secret,
-    callbackURL: process.env.callbackURL
+    callbackURL: process.env.callbackURL,
 },
     (accessToken, refreshToken, profile, done) => {
-        let tokenDetails = {
+        const tokenDetails = {
             profile,
-            token: accessToken
+            token: accessToken,
         };
         return done(null, tokenDetails);
-    }
-));
+    }));
