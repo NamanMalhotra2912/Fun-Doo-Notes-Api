@@ -1,27 +1,27 @@
+// eslint-disable-next-line spaced-comment
 /*************************************************************************
  * Execution        : 1. default node       cmd> npm start
- * 
+ *
  * Purpose          : to hit Api of Ragistartion,Login,Forget Password, and Reset password for user.
  *                  : to hit the Api of notes of Create, updatem retrieve and delete notes.
- * 
+ *
  * @file            : routes.js
  * @author          : Neeraj Malhotra
  * @version         : 1.0.0
- * 
+ *
  **************************************************************************/
 const passport = require('passport');
-const user = require('../controllers/user.js');
-const note = require('../controllers/note.js');
-const LabelController = require('../controllers/label.js');
-const { verifyToken, redisMiddleWare } = require('../../helper/validationSchema.js');
-const { isLoggedIn } = require('../../helper/passportAuthentication.js');
+const user = require('../controllers/user');
+const note = require('../controllers/note');
+const LabelController = require('../controllers/label');
+const { verifyToken, redisMiddleWare } = require('../../helper/validationSchema');
+const { isLoggedIn } = require('../../helper/passportAuthentication');
 /**
- * 
- * @param {*} app 
+ *
+ * @param {*} app
  * @description creating the routes for api's
  */
 module.exports = (app) => {
-
     app.post('/register', user.createUser);
 
     app.post('/login', user.login);
@@ -54,11 +54,9 @@ module.exports = (app) => {
 
     app.delete('/removeCollaborator', verifyToken, note.removeCollaborator);
 
-    app.get('/failed', (req, res) => res.send('Failed to login'))
+    app.get('/failed', (req, res) => res.send('Failed to login'));
 
     app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-    app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' })
-        , isLoggedIn, user.socialLogin);
-
-}
+    app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }), isLoggedIn, user.socialLogin);
+};
