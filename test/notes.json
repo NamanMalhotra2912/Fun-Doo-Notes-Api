@@ -13,6 +13,10 @@
         "updateNoteDetails": {
             "title": "note updated",
             "description": "updated the google keep note"
+        },
+        "login":{
+            "email": "harrymalhotra@gmail.com",
+            "password" : "Harmalhotra@4321"
         }
     }
 }
