@@ -1,36 +1,38 @@
+/* eslint-disable indent */
+/* eslint-disable spaced-comment */
 /*************************************************************************
  * Execution        : 1. default node       cmd> npm run test
- * 
+ *
  * Purpose          : to write test cases for register,login,forget and reset password.
- *                    
- * 
+ *
+ *
  * @file            : registration.js
  * @author          : Neeraj Malhotra
  * @version         : 1.0.0
- * 
+ *
  **************************************************************************/
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = require('../server.js');
+const server = require('../server');
 
 chai.use(chaiHttp);
 const userData = require('./user.json');
 
 chai.should();
 
-describe('userRagistrartion', () => {
-  it('check user with correct data for ragistration', (done) => {
+describe('registrartion', () => {
+  it('givenUserDetails_whenProper_ShouldRegisterUser', (done) => {
     const userInfo = userData.user.correct_Data_For_Ragistration;
     chai.request(server).post('/userRagistrartion').send(userInfo).end((err, res) => {
-        res.should.have.status(404);
-        done();
-      });
+      res.should.have.status(404);
+      done();
+    });
   });
 });
 
-describe('inCorrectUser', () => {
-  it('check user with in correct data for ragistration', (done) => {
+describe('wrong_registrartion', () => {
+  it('givenUserDetails_whenWrong_ShouldNotRegisterUser', (done) => {
     const userInfo = userData.user.in_correct_Data_For_Ragistration;
     chai.request(server).post('/inCorrectUser').send(userInfo).end((err, res) => {
       res.should.have.status(404);
@@ -40,7 +42,7 @@ describe('inCorrectUser', () => {
 });
 
 describe('login', () => {
-  it('check user with correct data for login', (done) => {
+  it('givenLoginDetails_whenProper_ShouldLogin', (done) => {
     const userInfo = userData.user.check_UserLogin;
     chai.request(server).post('/login').send(userInfo).end((err, res) => {
       res.should.have.status(400);
@@ -48,7 +50,7 @@ describe('login', () => {
     });
   });
 
-  it('check user with in-correct data for login', (done) => {
+  it('givenLoginDetails_whenWrong_ShouldNotLogin', (done) => {
     const userInfo = userData.user.check_Incorrect_UserLogin;
     chai.request(server).post('/login').send(userInfo).end((err, res) => {
       res.should.have.status(400);
@@ -58,7 +60,7 @@ describe('login', () => {
 });
 
 describe('forgetPassword', () => {
-  it('check user with correct data for email-id', (done) => {
+  it('givenEmailDetails_whenProper_ShouldAllowForgetPassword', (done) => {
     const userInfo = userData.user.check_Forget_Password;
     chai.request(server).post('/forgetPassword').send(userInfo).end((err, res) => {
       res.should.have.status(500);
@@ -66,7 +68,7 @@ describe('forgetPassword', () => {
     });
   });
 
-  it('check user with in-correct data for email-id', (done) => {
+  it('givenEmailDetails_whenWrong_ShouldNotAllowForgetPassword', (done) => {
     const userInfo = userData.user.check_InCorrect_Forget_Password;
     chai.request(server).post('/forgetPassword').send(userInfo).end((err, res) => {
       res.should.have.status(500);
@@ -76,21 +78,21 @@ describe('forgetPassword', () => {
 });
 
 describe('resetPassword', () => {
-  it('check with correct reset password', (done) =>{
+  it('givenDetails_whenProper_ShouldResetPassword', (done) => {
     const userInfo = userData.user.resetPassword;
-    chai.request(server).post('/resetPassword').send(userInfo).end((err,res) =>{
+    chai.request(server).post('/resetPassword').send(userInfo).end((err, res) => {
       res.should.have.status(400);
       done();
-    })
-  })
+    });
+  });
 });
 
 describe('incorrect_resetPassword', () => {
-  it('check with correct reset password', (done) =>{
+  it('givenDetails_whenWrong_ShouldNotResetPassword', (done) => {
     const userInfo = userData.user.incorrect_resetPassword;
-    chai.request(server).post('/incorrect_resetPassword').send(userInfo).end((err,res) =>{
+    chai.request(server).post('/incorrect_resetPassword').send(userInfo).end((err, res) => {
       res.should.have.status(404);
       done();
-    })
-  })
+    });
+  });
 });
