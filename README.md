@@ -1,7 +1,7 @@
 # FunDooNotesApp
 
 ## Discription
-This is the Fun Doo Notes Api where we have user ragistration, user login, forget password and reset password api's.
+This is the Fun Doo Notes Api similar to Google Keep where we have the api for User's crud, Notes crud and for Labels crud api.
 To run this project you need to clone this repository and then you can install npm package.
 
 ### To clone this repository : 
@@ -30,7 +30,6 @@ Added test cases as well to test our api's
 ### Use command to run the test cases :
 npm run test or
 npm run coverage
-
 
 ### Author : 
 Neeraj Malhotra
