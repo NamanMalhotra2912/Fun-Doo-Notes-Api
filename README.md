@@ -2,7 +2,8 @@
 
 ## Discription
 This is the Fun Doo Notes Api similar to Google Keep where we have the api for User's crud, Notes crud and for Labels crud api.
-To run this project you need to clone this repository and then you can install npm package.
+
+# To run this project you need to clone this repository and then you can install npm package.
 
 ### To clone this repository : 
 
