@@ -10,8 +10,7 @@ let token = ' ';
 
 describe('Labels', () => {
     before((done) => {
-        chai.request(server)
-            .post('/login')
+        chai.request(server).post('/login')
             .send(labelData.labels.login)
             .end((err, res) => {
                 token = res.body.Token;
