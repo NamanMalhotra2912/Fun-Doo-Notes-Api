@@ -31,7 +31,7 @@ describe('registrartion', () => {
   });
 });
 
-describe('wrong_registrartion', () => {
+describe('incorrect_registrartion', () => {
   it('givenUserDetails_whenWrong_ShouldNotRegisterUser', (done) => {
     const userInfo = userData.user.in_correct_Data_For_Ragistration;
     chai.request(server).post('/inCorrectUser').send(userInfo).end((err, res) => {
