@@ -13,7 +13,7 @@ describe('Labels', () => {
         chai.request(server).post('/login')
             .send(labelData.labels.login)
             .end((err, res) => {
-                token = res.body.Token
+                token = res.body.Token;
                 done();
             });
     });
@@ -21,13 +21,15 @@ describe('Labels', () => {
     describe('create Label', () => {
         it('givenLabelDetails_whenProper_ShouldCreateLabel', () => {
             chai.request(server).post('/label').set('token', token)
-                .send(labelData.labels.createLabel).end((err, res) => {
+                .send(labelData.labels.createLabel)
+                .end((err, res) => {
                     res.should.have.status(200);
                 });
         });
         it('givenLabelDetails_whenWrong_ShouldNotCreateLabel', () => {
             chai.request(server).post('/label').set('token', token)
-                .send().end((err, res) => {
+                .send()
+                .end((err, res) => {
                     res.should.have.status(500);
                 });
         });
@@ -38,13 +40,13 @@ describe('Labels', () => {
                     res.should.have.status(401);
                 });
         });
-
     });
 
     describe('retrieve Label', () => {
         it('giveToken_whenProper_ShouldRetrieveLabel', () => {
             chai.request(server).get('/label').set('token', token)
-                .send().end((err, res) => {
+                .send()
+                .end((err, res) => {
                     res.should.have.status(200);
                 });
         });
@@ -61,7 +63,8 @@ describe('Labels', () => {
         it('giveCorrectIdForUpdate_whenProper_ShouldUpdateLabel', () => {
             chai.request(server).put('/label/60bed76e9315901fa8648bda')
                 .set('token', token)
-                .send(labelData.labels.updateLabel).end((err, res) => {
+                .send(labelData.labels.updateLabel)
+                .end((err, res) => {
                     res.should.have.status(200);
                 });
         });
@@ -80,13 +83,13 @@ describe('Labels', () => {
                     res.should.have.status(401);
                 });
         });
-
     });
 
     describe('delete Label', () => {
         it('giveLabelId_whenProper_shouldDeleteLabel', () => {
             chai.request(server).delete('/label/60bee68f2bea9217f44af367')
-                .set('token', token).send().end((err, res) => {
+                .set('token', token).send()
+                .end((err, res) => {
                     res.should.have.status(200);
                 });
         });
@@ -184,7 +187,7 @@ describe('Labels', () => {
                     res.should.have.status(401);
                 });
         });
-    })
+    });
 
     describe('remove Collaborator From Note', () => {
         it('givenCollaboratorDetails_whenProper_shouldRemoveCollaborator', () => {
@@ -208,6 +211,5 @@ describe('Labels', () => {
                     res.should.have.status(401);
                 });
         });
-    })
-
+    });
 });
