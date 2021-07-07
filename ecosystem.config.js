@@ -1,7 +1,8 @@
+/* eslint-disable quotes */
 module.exports = {
     apps: [{
-        name: "FunDooNotesApi",
+        name: "fundoonotes",
         script: "npm",
-        args: "start"
-    }]
+        args: "start",
+    }],
 }
