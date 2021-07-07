@@ -7,7 +7,7 @@
             "label": "This is create label"
         },
         "updateLabel": {
-            "label": "Here I'm updating my label"
+            "label": "Here I'm updating the label"
         },
         "addLabelIntoNote": {
             "labelId": "60c2cb2932aa660f54806250",
