@@ -35,7 +35,7 @@ describe('Notes', () => {
       });
   });
 
-  describe('notes', () => {
+  describe.only('notes', () => {
     it('givenNoteDetails_whenProper_ShouldCreateNote', (done) => {
       chai.request(server).post('/notes').set('token', token)
         .send(noteData.notes.createNote)
@@ -44,9 +44,27 @@ describe('Notes', () => {
           done();
         });
     });
+    it('givenNoteDetails_whenWrong_shouldNotCreateANote', (done) => {
+      chai.request(server).post('/notes').set('token', token)
+        .send(noteData.notes.createNoteWithWrongData)
+        .end((err, res) => {
+          res.should.have.status(400);
+        });
+      done();
+    });
+    it('givenNoteDetails_whenProper_ButTokenMissing_shouldNotCreateANote', (done) => {
+      chai
+        .request(server)
+        .post('/notes')
+        .send(noteData.notes.createNote)
+        .end((err, res) => {
+          res.should.have.status(401);
+        });
+      done();
+    });
   });
 
-  describe('inCorrectNotes', () => {
+  describe.only('inCorrectNotes', () => {
     it('givenNoteDetails_whenWrong_ShouldNotCreateNote', (done) => {
       chai.request(server).post('/notes').set('token', token)
         .send(noteData.notes.createNoteWithWrongData)
@@ -57,7 +75,7 @@ describe('Notes', () => {
     });
   });
 
-  describe('updateNote', () => {
+  describe.only('updateNote', () => {
     it('givenNoteDetails_whenProper_ShouldUpdateNote', (done) => {
       chai.request(server).put('/notes/60b700f1ad79c735800ccba3').set('token', token)
         .send(noteData.notes.updateNoteDetails)
@@ -66,9 +84,25 @@ describe('Notes', () => {
         });
       done();
     });
+    it('givenNoteId_when_Wrong_shouldNotUpdateNote', (done) => {
+      chai.request(server).put('/notes/6015ba511f4c480119').set('token', token)
+        .send(noteData.notes.updateData)
+        .end((err, res) => {
+          res.should.have.status(400);
+        });
+      done();
+    });
+    it('givenToken_when_Wrong_shouldNotUpdateNote', (done) => {
+      chai.request(server).get('/notes').set('token', `${noteData.notes.genratedToken.wrongToken}`)
+        .send()
+        .end((err, res) => {
+          res.should.have.status(401);
+          done();
+        });
+    });
   });
 
-  describe('retreiveNotes', () => {
+  describe.only('retreiveNotes', () => {
     it('givenNoteDetails_whenProper_shouldRetriveNote', (done) => {
       chai.request(server).get('/notes').set('token', token)
         .send()
@@ -77,14 +111,30 @@ describe('Notes', () => {
           done();
         });
     });
+    it('givenToken_when_Wrong_shouldNotAbleToRetriveAllNote', (done) => {
+      chai.request(server).get('/notes').set('token', `${noteData.notes.genratedToken.wrongToken}`)
+        .send()
+        .end((err, res) => {
+          res.should.have.status(401);
+          done();
+        });
+    });
   });
 
-  describe('deleteNotes', () => {
+  describe.only('deleteNotes', () => {
     it('givenNoteId_whenProper_shouldDeleteNote', (done) => {
       chai.request(server).delete('/notes/60ab2657c154d831f0b562a2').set('token', token)
         .send()
         .end((err, res) => {
           res.should.have.status(404);
+          done();
+        });
+    });
+    it('givenToken_whenImProper_shouldNotAbleToRetriveAllNote', (done) => {
+      chai.request(server).get('/notes').set('token', `${noteData.notes.genratedToken.wrongToken}`)
+        .send()
+        .end((err, res) => {
+          res.should.have.status(401);
           done();
         });
     });
