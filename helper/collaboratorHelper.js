@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 
@@ -25,6 +26,6 @@ const mail = () => {
             });
         }
     });
-}
+};
 
 module.exports = { mail };
