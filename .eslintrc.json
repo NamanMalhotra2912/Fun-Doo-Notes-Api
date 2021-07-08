@@ -20,6 +20,7 @@
         "prefer-destructuring": "off",
         "no-unused-expressions": "off",
         "prefer-promise-reject-errors": "off",
-        "arrow-body-style": "off"
+        "arrow-body-style": "off",
+        "indent": ["error", 4]
     }
 }
